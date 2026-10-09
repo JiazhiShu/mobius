@@ -1,4 +1,4 @@
-import {loadCatalog, loadMotion, protocols, illustrationMask, validateMask, maskSegments} from './data.js?v=20260923-m2t11';
+import {loadCatalog, loadMotion, protocols, illustrationMask, validateMask, maskSegments} from './data.js?v=20261009-hy';
 import {MotionViewer} from './viewer.js?v=20260920-edit';
 
 const escape = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));

@@ -5,7 +5,7 @@
   <title>MÖBIUS — Unified Model for Bidirectional Motion Understanding and Synthesis</title>
   <meta name="description" content="MÖBIUS is a unified model for bidirectional human motion understanding and synthesis.">
   <link rel="icon" href="./assets/Mobius.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="./src/styles.css?v=20260923-m2t11">
+  <link rel="stylesheet" href="./src/styles.css?v=20261009-overleaf">
   <script type="importmap">{"imports":{"three":"./vendor/three/three.module.js"}}</script>
 </head>
 <body>
@@ -13,13 +13,14 @@
   <main>
     <section class="intro" id="top">
       <h1>MÖBIUS: UNIFIED MODEL FOR BIDIRECTIONAL<br>MOTION UNDERSTANDING AND SYNTHESIS</h1>
-      <figure class="teaser-figure"><img src="./assets/teaser3.png" alt="Overview of MÖBIUS motion understanding and synthesis capabilities"></figure>
+      <figure class="teaser-figure"><img src="./assets/teaser-overleaf-v3.webp" alt="Overview of MÖBIUS motion understanding and synthesis capabilities"></figure>
     </section>
+<section class="demo-video-section" id="demo-video" aria-labelledby="demo-video-heading"><div class="benchmark-heading"><p class="eyebrow">MÖBIUS IN ACTION</p><h2 id="demo-video-heading">One model. A complete motion workflow.</h2><p>Generate, complete, edit, and understand motion in a single workflow.</p></div><video controls playsinline preload="none" poster="./assets/mobius-workflow-poster.jpg" aria-label="MÖBIUS sequential motion demonstration"><source src="./assets/mobius-workflow-demo-116.mp4" type="video/mp4">Your browser does not support embedded video.</video></section>
     <section class="task-section" id="t2m" aria-labelledby="t2m-heading"><div class="task-heading"><div><p class="eyebrow">01 / GENERATION</p><h2 id="t2m-heading">Text-to-Motion</h2><p>We compare our MÖBIUS (1.7B) with HY-Motion 1B and MotionMillion 3B on manually written OOD prompts.</p></div><span class="section-chip">15 precomputed comparisons</span></div><div class="studio" data-task="t2m"></div></section>
     <section class="task-section" id="m2t" aria-labelledby="m2t-heading"><div class="task-heading"><div><p class="eyebrow">02 / UNDERSTANDING</p><h2 id="m2t-heading">Motion-to-Text</h2><p>We compare Motius 1.7B and Motius 0.6B with MotionGPT3 on our internal test dataset.</p></div><span class="section-chip">11 selected samples</span></div><div class="studio" data-task="m2t"></div></section>
-    <section class="task-section" id="structure" aria-labelledby="structure-heading"><div class="task-heading"><div><p class="eyebrow">03 / TEMPORAL INPAINTING</p><h2 id="structure-heading">Temporal Inpainting</h2><p>We evaluate MÖBIUS (0.6B) on the HumanML3D test set.</p></div><span class="section-chip">4 tasks · 32 selected</span></div><div class="studio" data-task="structure"></div></section>
+    <section class="task-section" id="structure" aria-labelledby="structure-heading"><div class="task-heading"><div><p class="eyebrow">03 / TEMPORAL INPAINTING</p><h2 id="structure-heading">Temporal Inpainting</h2><p>We evaluate MÖBIUS (1.7B) on the HumanML3D test set.</p></div><span class="section-chip">4 tasks · 32 selected</span></div><div class="studio" data-task="structure"></div></section>
     <section class="task-section" id="edit" aria-labelledby="edit-heading"><div class="task-heading"><div><p class="eyebrow">04 / INSTRUCTION EDITING</p><h2 id="edit-heading">Motion Editing</h2><p>We compare MÖBIUS (0.6B), MotionFix, and MotionLab on the MotionFix test set.</p></div><span class="section-chip">5 selected samples</span></div><div class="studio" data-task="edit"></div></section>
-    <section class="pipeline-section" aria-label="MÖBIUS pipeline"><figure class="pipeline-figure"><img src="./assets/pipeline.png" alt="MÖBIUS unified motion understanding and synthesis pipeline"></figure></section>
+    <section class="pipeline-section" aria-label="MÖBIUS pipeline"><figure class="pipeline-figure"><img src="./assets/pipeline-overleaf.webp" alt="MÖBIUS unified motion understanding and synthesis pipeline"></figure></section>
     <section class="benchmark-section" id="benchmark" aria-labelledby="benchmark-heading">
       <div class="benchmark-heading"><p class="eyebrow">QUANTITATIVE RESULTS</p><h2 id="benchmark-heading">Benchmark</h2><p>Results on the HumanML3D test set.</p></div>
 
@@ -27,18 +28,22 @@
         <div class="benchmark-title"><div><span>GENERATION</span><h3>Text-to-Motion</h3></div><p>MotionStreamer-272 evaluator</p></div>
         <div class="table-scroll" role="region" aria-label="Text-to-motion benchmark results" tabindex="0">
           <table class="benchmark-table t2m-table">
-            <thead><tr><th>Method</th><th>R@1 ↑</th><th>R@2 ↑</th><th>R@3 ↑</th><th>FID ↓</th><th>MMDist ↓</th><th>Diversity →</th></tr></thead>
+            <thead><tr><th>Method</th><th>Task</th><th>R@1 ↑</th><th>R@2 ↑</th><th>R@3 ↑</th><th>FID ↓</th><th>MMDist ↓</th><th>Diversity →</th></tr></thead>
             <tbody>
-              <tr class="ground-truth"><th>GT</th><td>0.7703</td><td>0.9030</td><td>0.9442</td><td>0.0000</td><td>14.8785</td><td>27.7705</td></tr>
-              <tr class="group-row"><th colspan="7">Train on HumanML3D</th></tr>
-              <tr><th>MDM</th><td>0.5208</td><td>0.6937</td><td>0.7701</td><td>35.5169</td><td>19.4246</td><td>25.3383</td></tr>
-              <tr><th>T2M-GPT</th><td>0.5516</td><td>0.7056</td><td>0.7788</td><td>25.4913</td><td>19.0912</td><td>25.5949</td></tr>
-              <tr><th>MoMask</th><td>0.6404</td><td>0.7974</td><td>0.8609</td><td>21.0729</td><td>18.1216</td><td>25.9789</td></tr>
-              <tr><th>MotionGPT3</th><td>0.6709</td><td>0.8242</td><td>0.8817</td><td>20.9913</td><td>17.5664</td><td>25.6889</td></tr>
-              <tr><th>MotionStreamer</th><td>0.6303</td><td>0.7865</td><td>0.8498</td><td class="second">12.2110</td><td>16.5810</td><td class="second">27.4637</td></tr>
-              <tr><th>PRISM</th><td class="second">0.7463</td><td class="second">0.8832</td><td class="second">0.9241</td><td>19.0359</td><td class="second">15.5135</td><td>27.4151</td></tr>
-              <tr class="ours"><th>Ours (0.6B)</th><td class="best">0.8209</td><td class="best">0.9397</td><td class="best">0.9670</td><td class="best">6.1291</td><td class="best">13.9973</td><td class="best">27.6107</td></tr>
-            </tbody>
+<tr class="ground-truth"><th>GT</th><td>--</td><td>0.7703</td><td>0.9030</td><td>0.9442</td><td>0.0000</td><td>14.8785</td><td>27.7705</td></tr>
+<tr class="group-row"><th colspan="8">Trained on HumanML3D</th></tr>
+<tr><th>T2M-GPT</th><td>Gen.</td><td>0.5516</td><td>0.7056</td><td>0.7788</td><td>25.4913</td><td>19.0912</td><td>25.5949</td></tr>
+<tr><th>MoMask</th><td>Gen.</td><td>0.6404</td><td>0.7974</td><td>0.8609</td><td>21.0729</td><td>18.1216</td><td>25.9789</td></tr>
+<tr><th>MDM</th><td>Gen.</td><td>0.5208</td><td>0.6937</td><td>0.7701</td><td>35.5169</td><td>19.4246</td><td>25.3383</td></tr>
+<tr><th>MotionStreamer</th><td>Gen.</td><td>0.6303</td><td>0.7865</td><td>0.8498</td><td class="second">12.2110</td><td class="second">16.5810</td><td class="second">27.4637</td></tr>
+<tr><th>MotionGPT</th><td>Unified</td><td>0.4940</td><td>0.6352</td><td>0.6944</td><td>23.6811</td><td>19.6781</td><td>25.5410</td></tr>
+<tr><th>MotionGPT3</th><td>Unified</td><td class="second">0.6709</td><td class="second">0.8242</td><td class="second">0.8817</td><td>20.9913</td><td>17.5664</td><td>25.6889</td></tr>
+<tr class="ours"><th>Ours (0.6B)</th><td>Unified</td><td class="best">0.8209</td><td class="best">0.9397</td><td class="best">0.9670</td><td class="best">6.1291</td><td class="best">13.9973</td><td class="best">27.6107</td></tr>
+<tr class="group-row"><th colspan="8">Trained on large-scale dataset</th></tr>
+<tr><th>Go to Zero (3B)</th><td>Gen.</td><td>0.7401</td><td>0.8772</td><td>0.9229</td><td>23.7550</td><td>15.3806</td><td>26.6340</td></tr>
+<tr><th>HY-Motion (1B)</th><td>Gen.</td><td class="second">0.7899</td><td class="second">0.9177</td><td class="second">0.9516</td><td class="second">13.5194</td><td class="second">14.7748</td><td class="second">27.4183</td></tr>
+<tr class="ours"><th>Ours (1.7B)</th><td>Unified</td><td class="best">0.7968</td><td class="best">0.9226</td><td class="best">0.9524</td><td class="best">10.6642</td><td class="best">14.7441</td><td class="best">27.4649</td></tr>
+</tbody>
           </table>
         </div>
         <p class="benchmark-note"><strong>Bold</strong> and <span class="second">underline</span> indicate the best and second-best results within each training-data group. Diversity is compared with ground truth.</p>
@@ -50,13 +55,14 @@
           <table class="benchmark-table m2t-table">
             <thead><tr><th>Method</th><th>BLEU-1 ↑</th><th>BLEU-4 ↑</th><th>ROUGE-L ↑</th><th>CIDEr ↑</th><th>BERT ↑</th><th>R@1 ↑</th><th>R@2 ↑</th><th>R@3 ↑</th><th>MMDist ↓</th></tr></thead>
             <tbody>
-              <tr class="ground-truth"><th>GT</th><td>1.0000</td><td>1.0000</td><td>1.0000</td><td>4.5165</td><td>1.0000</td><td>0.5068</td><td>0.7064</td><td>0.8041</td><td>2.9784</td></tr>
-              <tr><th>TM2T</th><td>0.4912</td><td>0.0760</td><td>0.3808</td><td>0.1719</td><td>0.3215</td><td>0.5180</td><td>0.7178</td><td>0.8079</td><td>2.9584</td></tr>
-              <tr><th>MotionGPT</th><td>0.4605</td><td>0.1210</td><td>0.3849</td><td>0.3409</td><td>0.3388</td><td>0.5087</td><td>0.6880</td><td>0.7776</td><td>3.1121</td></tr>
-              <tr><th>MotionGPT3</th><td>0.5383</td><td>0.1605</td><td>0.4165</td><td>0.4077</td><td>0.3425</td><td>0.5333</td><td>0.7178</td><td>0.8043</td><td>2.8533</td></tr>
-              <tr><th>UniMuMo</th><td>0.4488</td><td>0.1271</td><td>0.3560</td><td>0.3114</td><td>0.4517</td><td>0.5162</td><td>0.7032</td><td>0.7984</td><td>2.9658</td></tr>
-              <tr class="ours"><th>Ours 0.6B (ML3D only)</th><td class="second">0.5664</td><td class="second">0.2032</td><td class="second">0.4636</td><td class="second">0.5754</td><td class="second">0.4541</td><td class="second">0.6056</td><td class="second">0.7936</td><td class="second">0.8761</td><td class="second">2.4693</td></tr>
-            </tbody>
+<tr class="ground-truth"><th>GT</th><td>1.0000</td><td>1.0000</td><td>1.0000</td><td>4.5165</td><td>1.0000</td><td>0.5068</td><td>0.7064</td><td>0.8041</td><td>2.9784</td></tr>
+<tr><th>TM2T</th><td>0.4912</td><td>0.0760</td><td>0.3808</td><td>0.1719</td><td>0.3215</td><td>0.5180</td><td>0.7178</td><td>0.8079</td><td>2.9584</td></tr>
+<tr><th>MotionGPT</th><td>0.4605</td><td>0.1210</td><td>0.3849</td><td>0.3409</td><td>0.3388</td><td>0.5087</td><td>0.6880</td><td>0.7776</td><td>3.1121</td></tr>
+<tr><th>MotionGPT3</th><td>0.5383</td><td>0.1605</td><td>0.4165</td><td>0.4077</td><td>0.3425</td><td>0.5333</td><td>0.7178</td><td>0.8043</td><td>2.8533</td></tr>
+<tr><th>UniMuMo</th><td>0.4488</td><td>0.1271</td><td>0.3560</td><td>0.3114</td><td>0.4517</td><td>0.5162</td><td>0.7032</td><td>0.7984</td><td>2.9658</td></tr>
+<tr class="ours"><th>Ours 0.6B (ML3D only)</th><td class="second">0.5664</td><td class="second">0.2032</td><td class="second">0.4636</td><td class="second">0.5754</td><td class="second">0.4541</td><td class="second">0.6056</td><td class="second">0.7936</td><td class="second">0.8761</td><td class="second">2.4693</td></tr>
+<tr class="ours"><th>Ours 1.7B (large-scale)</th><td class="best">0.5874</td><td class="best">0.2105</td><td class="best">0.4725</td><td class="best">0.5836</td><td class="best">0.4657</td><td class="best">0.6152</td><td class="best">0.8086</td><td class="best">0.8862</td><td class="best">2.4143</td></tr>
+</tbody>
           </table>
         </div>
         <p class="benchmark-note"><strong>Bold</strong> and <span class="second">underline</span> indicate the best and second-best model scores.</p>
@@ -87,6 +93,6 @@
       <div class="provenance-bar"><span class="reference-badge">REFERENCE DATA</span><p id="provenance-text">Training-set motion is used to demonstrate the viewer. Model outputs are not connected yet.</p></div>
 </template>
   <noscript>This interactive viewer needs JavaScript enabled.</noscript>
-  <script type="module" src="./src/app.js?v=20260923-m2t11"></script>
+  <script type="module" src="./src/app.js?v=20261009-overleaf"></script>
 </body>
 </html>

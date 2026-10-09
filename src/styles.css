@@ -57,3 +57,5 @@ html{scroll-behavior:smooth;scroll-padding-top:100px}
 .teaser-figure img{display:block;width:100%;height:auto}
 .pipeline-section{padding:48px 0 64px;border-top:1px solid var(--line)}
 @media(max-width:760px){.wordmark .logo{width:40px;height:25px}.pipeline-section{padding:34px 0 46px}.teaser-figure{margin:0 -18px}}
+
+.demo-video-section{padding:38px 0 64px;scroll-margin-top:100px}.demo-video-section video{display:block;width:100%;aspect-ratio:16/9;background:#f4f6f8;border:1px solid var(--line);border-radius:16px}.demo-video-section .benchmark-heading p{line-height:1.6}
