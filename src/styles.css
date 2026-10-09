@@ -59,3 +59,10 @@ html{scroll-behavior:smooth;scroll-padding-top:100px}
 @media(max-width:760px){.wordmark .logo{width:40px;height:25px}.pipeline-section{padding:34px 0 46px}.teaser-figure{margin:0 -18px}}
 
 .demo-video-section{padding:38px 0 64px;scroll-margin-top:100px}.demo-video-section video{display:block;width:100%;aspect-ratio:16/9;background:#f4f6f8;border:1px solid var(--line);border-radius:16px}.demo-video-section .benchmark-heading p{line-height:1.6}
+
+/* Paper title: Times-compatible serif and ICLR small capitals. */
+@font-face{font-family:PaperSerif;src:url('../assets/fonts/PaperSerif-Regular.ttf') format('truetype');font-style:normal;font-weight:400;font-display:swap}
+.intro h1,.wordmark .paper-wordmark{font-family:PaperSerif,'Times New Roman',Times,serif;font-weight:400;font-variant-caps:small-caps;font-synthesis:small-caps;letter-spacing:.015em}
+.intro h1{font-size:clamp(29px,3.5vw,48px);line-height:1.2}
+.wordmark .paper-wordmark{font-size:27px;line-height:1}
+@media(max-width:760px){.intro h1{font-size:clamp(26px,6.8vw,36px)}.wordmark .paper-wordmark{font-size:24px}}
