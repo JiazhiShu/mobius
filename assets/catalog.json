@@ -19,7 +19,7 @@
             "fps": 30.0,
             "numFrames": 150,
             "seed": 42,
-            "checkpoint": "/local-ssd/ckpts/omni_1.7b_hymotion201_ieg_staged_t2m_m2t_stage2_tm2m/0020000"
+            "checkpoint": "/efs/jiazhishu/Outputs/omni/training/staged_multitask/omni_1.7b_hymotion201_ieg_staged_t2m_m2t/stage2_tm2m/checkpoints/0050000"
           },
           {
             "motion": "assets/t2m_human64_01_hy_1b.json",
@@ -44,7 +44,7 @@
       "predictedCaption": null,
       "edit": null,
       "structures": {},
-      "checkpoint": "Ours · stage2_tm2m / 20000",
+      "checkpoint": "MÖBIUS 1.7B · 0050000 EMA · FP32 + SDPA · HY",
       "seed": 42,
       "sourceIndex": 0,
       "selection": "t2m_human64 browser case 1/64",
@@ -54,6 +54,10 @@
         "num_timesteps": 50,
         "guidance_scale": 3.0,
         "fps": 30.0
+      },
+      "postprocessing": {
+        "method": "official HY only",
+        "source": "/efs/jiazhishu/Outputs/omni/evaluations/website_fp32_20261009/t2m/motion_272/06.npy"
       }
     },
     {
@@ -73,7 +77,7 @@
             "fps": 30.0,
             "numFrames": 150,
             "seed": 48,
-            "checkpoint": "/local-ssd/ckpts/omni_1.7b_hymotion201_ieg_staged_t2m_m2t_stage2_tm2m/0020000"
+            "checkpoint": "/efs/jiazhishu/Outputs/omni/training/staged_multitask/omni_1.7b_hymotion201_ieg_staged_t2m_m2t/stage2_tm2m/checkpoints/0050000"
           },
           {
             "motion": "assets/t2m_human64_07_hy_1b.json",
@@ -98,7 +102,7 @@
       "predictedCaption": null,
       "edit": null,
       "structures": {},
-      "checkpoint": "Ours · stage2_tm2m / 20000",
+      "checkpoint": "MÖBIUS 1.7B · 0050000 EMA · FP32 + SDPA · HY",
       "seed": 48,
       "sourceIndex": 6,
       "selection": "t2m_human64 browser case 7/64",
@@ -108,6 +112,10 @@
         "num_timesteps": 50,
         "guidance_scale": 3.0,
         "fps": 30.0
+      },
+      "postprocessing": {
+        "method": "official HY only",
+        "source": "/efs/jiazhishu/Outputs/omni/evaluations/website_fp32_20261009/t2m/motion_272/07.npy"
       }
     },
     {
@@ -13947,7 +13955,7 @@
             "fps": 30.0,
             "numFrames": 150,
             "seed": 265,
-            "checkpoint": "/local-ssd/ckpts/omni_1.7b_hymotion201_ieg_copy28k_ema_gen_only/stage2/0110000"
+            "checkpoint": "/efs/jiazhishu/Outputs/omni/training/staged_multitask/omni_1.7b_hymotion201_ieg_staged_t2m_m2t/stage2_tm2m/checkpoints/0050000"
           },
           {
             "motion": "assets/t2m_human_all_224_hy_1b.json",
@@ -13972,7 +13980,7 @@
       "predictedCaption": null,
       "edit": null,
       "structures": {},
-      "checkpoint": "Ours · stage2 / 110000",
+      "checkpoint": "MÖBIUS 1.7B · 0050000 EMA · FP32 + SDPA · HY",
       "seed": 265,
       "sourceIndex": 223,
       "selection": "t2m_human_all browser case 224/1250",
@@ -13982,6 +13990,10 @@
         "num_timesteps": 50,
         "guidance_scale": 3.0,
         "fps": 30.0
+      },
+      "postprocessing": {
+        "method": "official HY only",
+        "source": "/efs/jiazhishu/Outputs/omni/evaluations/website_fp32_20261009/t2m/motion_272/04.npy"
       }
     },
     {
@@ -14001,7 +14013,7 @@
             "fps": 30.0,
             "numFrames": 150,
             "seed": 290,
-            "checkpoint": "/local-ssd/ckpts/omni_1.7b_hymotion201_ieg_copy28k_ema_gen_only/stage2/0110000"
+            "checkpoint": "/efs/jiazhishu/Outputs/omni/training/staged_multitask/omni_1.7b_hymotion201_ieg_staged_t2m_m2t/stage2_tm2m/checkpoints/0050000"
           },
           {
             "motion": "assets/t2m_human_all_249_hy_1b.json",
@@ -14026,7 +14038,7 @@
       "predictedCaption": null,
       "edit": null,
       "structures": {},
-      "checkpoint": "Ours · stage2 / 110000",
+      "checkpoint": "MÖBIUS 1.7B · 0050000 EMA · FP32 + SDPA · HY",
       "seed": 290,
       "sourceIndex": 248,
       "selection": "t2m_human_all browser case 249/1250",
@@ -14036,6 +14048,10 @@
         "num_timesteps": 50,
         "guidance_scale": 3.0,
         "fps": 30.0
+      },
+      "postprocessing": {
+        "method": "official HY only",
+        "source": "/efs/jiazhishu/Outputs/omni/evaluations/website_fp32_20261009/t2m/motion_272/05.npy"
       }
     },
     {
