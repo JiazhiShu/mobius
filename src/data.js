@@ -9,7 +9,7 @@ async function fetchOK(url) {
   return response;
 }
 export async function loadCatalog() {
-  const catalog = await (await fetchOK(new URL('../assets/catalog.json?v=20261009-t2m0407', import.meta.url))).json();
+  const catalog = await (await fetchOK(new URL('../assets/catalog.json?v=20261009-t2m-reorder', import.meta.url))).json();
   if (catalog.version !== 1 || !Array.isArray(catalog.samples) || !catalog.samples.length)
     throw new Error('The sample catalog is empty or unsupported.');
   return catalog;
