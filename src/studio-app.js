@@ -71,6 +71,12 @@ export function createStudio(root, task, catalog) {
   guide.setAttribute('aria-label', 'How to read this example');
   root.querySelector('.studio-body').before(guide);
   function renderGuide(sample) {
+    if (task === 'm2t') { guide.hidden = true; return; }
+    if (task === 't2m') {
+      guide.hidden = false;
+      guide.innerHTML = `<p class="eyebrow">TEXT PROMPT</p><blockquote class="prompt-card">${escape(sample.prompt || 'No prompt supplied for this file.')}</blockquote>`;
+      return;
+    }
     const content = task === 'structure' ? completionGuides[sample.structuralProtocol ?? state.protocol] : {
       t2m: {title: 'Motion Generation', input: 'A text prompt.', output: 'Motion generated from the same prompt by each selected model.'},
       m2t: {title: 'Motion Understanding', input: 'The animated motion in the viewer.', output: 'A text description from each model. Compare with the reference description.'},
@@ -91,8 +97,7 @@ export function createStudio(root, task, catalog) {
     renderGuide(sample);
     let body = '';
     if (sample.comparison) body += `<div class="comparison-legend">${sample.comparison.models.map((model, index) => `<label class="model-${String.fromCharCode(97 + index)}" style="${model.color ? `color:${escape(model.color)}` : ''}" for="model-visible-${index}"><input id="model-visible-${index}" type="checkbox" ${state.visibleModels[index] !== false ? 'checked' : ''} ${state.loading ? 'disabled' : ''}> ${String.fromCharCode(65 + index)} · ${escape(model.label)}</label>`).join('')}</div><div class="task-block"><label for="separation">Starting gap: <output id="separation-value">${state.separation ?? 3} m</output></label><input type="range" id="separation" min="1" max="8" step="0.25" value="${state.separation ?? 3}"><p class="description">Adjacent starting body centers use this spacing. Original movement and timing are preserved.</p></div>`;
-    if (state.task === 't2m') body += `<div><p class="eyebrow">${sample.generated ? 'TEXT PROMPT' : 'REFERENCE DESCRIPTION'}</p><blockquote class="prompt-card">${escape(sample.prompt || 'No prompt supplied for this file.')}</blockquote></div>${sample.generated ? '' : '<div class="empty-output">Viewer sample only. Generated results will replace this reference motion.</div>'}`;
-    if (state.task === 'm2t') body = `<div class="caption-result motius-result"><p class="eyebrow">${escape(sample.predictionLabel ?? 'MÖBIUS')}</p>${sample.predictedCaption ? `<blockquote class="prompt-card motius-caption">${escape(sample.predictedCaption)}</blockquote>` : '<div class="empty-output">No MÖBIUS caption connected yet.</div>'}</div>${sample.fixedConditionCaption ? `<div class="caption-result fixed-condition-result"><p class="eyebrow">${escape(sample.fixedConditionLabel ?? 'MÖBIUS 0.6B')}</p><blockquote class="prompt-card fixed-condition-caption">${escape(sample.fixedConditionCaption)}</blockquote></div>` : ''}${sample.motiongpt3Caption ? `<div class="caption-result motiongpt-result"><p class="eyebrow">MOTIONGPT3</p><blockquote class="prompt-card motiongpt-caption">${escape(sample.motiongpt3Caption)}</blockquote></div>` : ''}${sample.captionReview ? `<div class="caption-result reference-result"><p class="eyebrow">REFERENCE DESCRIPTION</p><blockquote class="prompt-card reference-caption">${escape(sample.prompt)}</blockquote></div>` : `<details><summary class="description">Reference description</summary><p class="description">${escape(sample.prompt)}</p></details>`}`;
+    if (state.task === 'm2t') body = `${sample.motiongpt3Caption ? `<div class="caption-result motiongpt-result"><p class="eyebrow">MOTIONGPT3</p><blockquote class="prompt-card motiongpt-caption">${escape(sample.motiongpt3Caption)}</blockquote></div>` : ''}<div class="caption-result motius-result"><p class="eyebrow">${escape((sample.predictionLabel ?? 'MÖBIUS').replace(/MOTIUS/gi, 'MÖBIUS'))}</p>${sample.predictedCaption ? `<blockquote class="prompt-card motius-caption">${escape(sample.predictedCaption)}</blockquote>` : '<div class="empty-output">No MÖBIUS caption connected yet.</div>'}</div>${sample.fixedConditionCaption ? `<div class="caption-result fixed-condition-result"><p class="eyebrow">${escape((sample.fixedConditionLabel ?? 'MÖBIUS 0.6B').replace(/MOTIUS/gi, 'MÖBIUS'))}</p><blockquote class="prompt-card fixed-condition-caption">${escape(sample.fixedConditionCaption)}</blockquote></div>` : ''}${sample.captionReview ? `<div class="caption-result reference-result"><p class="eyebrow">REFERENCE DESCRIPTION</p><blockquote class="prompt-card reference-caption">${escape(sample.prompt)}</blockquote></div>` : `<details><summary class="description">Reference description</summary><p class="description">${escape(sample.prompt)}</p></details>`}`;
     if (state.task === 'structure') body = sample.structuralPair
       ? `<div class="structure-caption"><p class="eyebrow">TEXT GUIDANCE · INPUT PROMPT</p><blockquote class="prompt-card">${escape(sample.prompt)}</blockquote></div><div class="structure-controls"><div class="pair-legend"><span><i class="pair-dot known-orange"></i> Given motion</span><span><i class="pair-dot generated-blue"></i> Generated motion</span></div><p class="description">${Math.round(sample.structuralPair.knownRatio * 100)}% of frames supplied as input${sample.structuralProtocol === 'keyframe' ? ' · selected input poses shown in orange' : ''}</p>${sample.structuralProtocol === 'keyframe' ? '<p class="description">Orange poses show selected input keyframes as spatial references. The blue character shows the generated motion; exact overlap is not guaranteed.</p>' : ''}<div class="task-actions"><button id="show-full" aria-pressed="${!state.onlyKnown}">Full sequence</button><button id="show-known" aria-pressed="${state.onlyKnown}">Show input poses</button><button id="next-boundary">Next transition</button></div></div>`
       : `<div class="task-block"><label for="protocol">Completion task</label><select id="protocol">${Object.entries(protocols).map(([key, value]) => `<option value="${key}" ${key === state.protocol ? 'selected' : ''}>${value.name}</option>`).join('')}</select><p class="description">${protocols[state.protocol].description}</p></div><div class="task-actions"><button id="show-full" aria-pressed="${!state.onlyKnown}">Full sequence</button><button id="show-known" aria-pressed="${state.onlyKnown}">Show input poses</button><button id="next-boundary">Next transition</button></div><div class="empty-output">${state.illustrative ? 'Mask illustration on a reference sequence. Orange indicates a region to complete, not a generated result.' : 'Blue marks observed frames; orange marks the completion region.'}</div>`;
@@ -360,14 +365,51 @@ async function initialize() {
       controllers.forEach(controller => controller.pause());
       if (!event.persisted) { cancelAnimationFrame(animation); controllers.forEach(controller => controller.dispose()); }
     });
-    const observer = new IntersectionObserver(entries => {
-      const current = entries.filter(entry => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-      if (current) document.querySelectorAll('.section-nav a').forEach(link => {
-        if (link.hash === `#${current.target.id}`) link.setAttribute('aria-current', 'location'); else link.removeAttribute('aria-current');
+    const navLinks = [...document.querySelectorAll('.section-nav a')];
+    const header = document.querySelector('.site-header');
+    const sections = navLinks.map(link => document.querySelector(link.hash)).filter(Boolean);
+    function updateNavigation() {
+      const top = header.getBoundingClientRect().bottom + 24;
+      const current = sections.find(section => {
+        const rect = section.getBoundingClientRect();
+        return rect.top <= top && rect.bottom > top;
       });
-    }, {rootMargin: '-90px 0px -35% 0px', threshold: [0, .2, .5]});
-    document.querySelectorAll('.task-section').forEach(section => observer.observe(section));
-    if (['#t2m', '#m2t', '#structure', '#edit'].includes(location.hash)) requestAnimationFrame(() => document.querySelector(location.hash)?.scrollIntoView());
+      navLinks.forEach(link => {
+        if (current && link.hash === `#${current.id}`) link.setAttribute('aria-current', 'location');
+        else link.removeAttribute('aria-current');
+      });
+    }
+    let navigationTarget = null;
+    function navigate(hash) {
+      const target = document.getElementById(hash.slice(1));
+      if (!target) return;
+      navigationTarget = hash;
+      // One measured header offset; avoid combining scroll padding and scroll margin.
+      window.scrollTo({top: window.scrollY + target.getBoundingClientRect().top - header.getBoundingClientRect().height - 12, behavior: 'instant'});
+      updateNavigation();
+    }
+    document.querySelectorAll('a[href^="#"]').forEach(link => link.addEventListener('click', event => {
+      if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      if (!document.getElementById(link.hash.slice(1))) return;
+      event.preventDefault();
+      if (location.hash !== link.hash) history.pushState(null, '', link.hash);
+      navigate(link.hash);
+    }));
+    // Lazy-loaded viewers above the destination can change the page height.
+    // Keep the selected anchor aligned until the visitor starts interacting.
+    const layoutObserver = new ResizeObserver(() => {
+      if (navigationTarget) navigate(navigationTarget);
+      else updateNavigation();
+    });
+    layoutObserver.observe(document.querySelector('main'));
+    for (const type of ['wheel', 'touchstart', 'pointerdown', 'keydown']) {
+      window.addEventListener(type, () => { navigationTarget = null; }, {passive: true});
+    }
+    window.addEventListener('scroll', updateNavigation, {passive: true});
+    window.addEventListener('resize', updateNavigation);
+    window.addEventListener('hashchange', () => navigate(location.hash));
+    if (location.hash) requestAnimationFrame(() => navigate(location.hash));
+    updateNavigation();
     registerViewerTools();
   } catch (error) {
     document.querySelectorAll('.studio').forEach(root => { root.textContent = `Could not load the demo: ${error.message}`; });

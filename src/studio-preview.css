@@ -62,3 +62,8 @@
 .task-guide-flow span{display:block;margin-bottom:5px;font-size:10px;font-weight:700;letter-spacing:1.2px;color:#627e8d}
 .task-guide .task-guide-reading{margin:14px 0 0;padding-top:12px;border-top:1px solid #d6e2e6;font-size:13px;line-height:1.7;color:#365565}
 @media(max-width:760px){.task-guide{padding:18px}.task-guide-flow{grid-template-columns:1fr;gap:14px}.task-guide h3{font-size:18px}}
+
+.studio-preview [data-task=m2t] .motius-caption,
+.studio-preview [data-task=m2t] .fixed-condition-caption{font-weight:700;font-synthesis:weight}
+.studio-preview [data-task=t2m] .task-guide .prompt-card{margin:0}
+.studio-preview .demo-video-section video{height:auto;aspect-ratio:16/9}
