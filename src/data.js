@@ -50,10 +50,10 @@ export async function loadMotion(path) {
 }
 
 export const protocols = {
-  continuation: {name: 'Continuation', description: 'Observe the beginning, complete what follows.'},
-  prefix: {name: 'Prefix filling', description: 'Observe the ending, complete what came before.'},
+  continuation: {name: 'Prediction', description: 'Observe the beginning, complete what follows.'},
+  prefix: {name: 'Backcasting', description: 'Observe the ending, complete what came before.'},
   inbetween: {name: 'In-betweening', description: 'Connect an observed beginning and ending.'},
-  keyframe: {name: 'Keyframe completion', description: 'Connect a sparse set of observed poses.'},
+  keyframe: {name: 'Keyframe Infilling', description: 'Connect a sparse set of observed poses.'},
 };
 /** Illustration masks are used ONLY when a real result and its mask are absent. */
 export function illustrationMask(protocol, frames) {
