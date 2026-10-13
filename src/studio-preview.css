@@ -51,3 +51,14 @@
 .studio-preview [data-task=structure] .stage{height:380px;min-height:380px;max-height:380px;flex:none}
 .studio-preview [data-task=structure].studio:fullscreen .stage{height:calc(100vh - 450px);max-height:none}
 @media(max-width:760px){.studio-preview [data-task=structure] .inspector{grid-template-columns:1fr;gap:16px;padding:18px}.studio-preview [data-task=structure] .structure-controls{border-left:0;border-top:1px solid var(--line);padding:14px 0 0}.studio-preview [data-task=structure] .prompt-card{font-size:19px}.studio-preview [data-task=structure] .stage{height:320px;min-height:320px;max-height:320px}}
+
+/* Explain the task before introducing comparisons and playback controls. */
+.studio-preview .task-heading p:not(.eyebrow):not(.task-evaluation){font-size:16px;line-height:1.7;max-width:780px;color:#365565}
+.studio-preview .task-heading .task-evaluation{font-size:12px;color:#70818d;max-width:780px;margin-top:12px}
+.task-guide{padding:22px 24px;background:#edf4f7;border-bottom:1px solid var(--line)}
+.task-guide h3{margin:0 0 14px;font-size:19px;font-weight:600;color:#244b60}
+.task-guide-flow{display:grid;grid-template-columns:1fr 1.4fr;gap:28px}
+.task-guide-flow p{margin:0;font-size:14px;line-height:1.65;color:#365565}
+.task-guide-flow span{display:block;margin-bottom:5px;font-size:10px;font-weight:700;letter-spacing:1.2px;color:#627e8d}
+.task-guide .task-guide-reading{margin:14px 0 0;padding-top:12px;border-top:1px solid #d6e2e6;font-size:13px;line-height:1.7;color:#365565}
+@media(max-width:760px){.task-guide{padding:18px}.task-guide-flow{grid-template-columns:1fr;gap:14px}.task-guide h3{font-size:18px}}

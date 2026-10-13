@@ -22,7 +22,7 @@ export function createStudio(root, task, catalog) {
   const state = {task, protocol: 'inbetween', sample: null, catalog, motion: null, seconds: 0, duration: 0,
     playing: false, speed: 1, mask: null, onlyKnown: false, editMode: 'split', loading: true, request: 0, illustrative: false, motions: [], visibleModels: []};
   let viewer, visible = false, started = false;
-  const structuralLabels = {continuation: 'Continuation', prefix: 'Prefix Filling', inbetween: 'In-betweening', keyframe: 'Keyframe'};
+  const structuralLabels = {continuation: 'Continuation', prefix: 'Prefix Filling', inbetween: 'In-betweening', keyframe: 'Keyframe completion'};
   const structuralProtocols = task === 'structure'
     ? ['continuation', 'prefix', 'inbetween', 'keyframe'].filter(protocol => allSamples.some(sample => sample.structuralProtocol === protocol)) : [];
   if (structuralProtocols.length > 1) {
@@ -60,17 +60,43 @@ export function createStudio(root, task, catalog) {
     $('#play').textContent = state.playing ? 'Ⅱ' : '▶';
     $('#play').setAttribute('aria-label', state.playing ? 'Pause motion' : 'Play motion');
   }
+  const completionGuides = {
+    continuation: {title: 'Continue the motion', input: 'The beginning of a motion.', output: 'Generate what happens next.'},
+    prefix: {title: 'Generate the beginning', input: 'The ending of a motion.', output: 'Generate the motion leading up to that ending.'},
+    inbetween: {title: 'Fill the gap between two motions', input: 'The beginning and ending of a motion.', output: 'Generate a transition that connects them.'},
+    keyframe: {title: 'Connect the key poses', input: 'A set of poses at specific times.', output: 'Generate the motion between the given poses.'},
+  };
+  const guide = document.createElement('section');
+  guide.className = 'task-guide';
+  guide.setAttribute('aria-label', 'How to read this example');
+  root.querySelector('.studio-body').before(guide);
+  function renderGuide(sample) {
+    const content = task === 'structure' ? completionGuides[sample.structuralProtocol ?? state.protocol] : {
+      t2m: {title: 'One description → generated motion', input: 'A text prompt describing the action.', output: 'Each selected model generates its own motion from the same prompt.'},
+      m2t: {title: 'One motion → a written description', input: 'The animated motion in the viewer.', output: 'Each model describes the action in words. Compare its caption with the reference.'},
+      edit: {title: 'Original motion + instruction → edited motion', input: 'The original motion and the edit instruction.', output: 'MÖBIUS changes the motion to follow the instruction. Gray is the original; blue is the edited result.'},
+    }[task];
+    if (!content) { guide.hidden = true; return; }
+    guide.hidden = false;
+    const comparison = task === 'structure' && sample.structuralPair
+      ? sample.structuralPair.single
+        ? 'This example shows completion with text guidance. Orange poses mark the displayed input keyframes; the blue character plays the completed motion.'
+        : 'Both results use the same given motion. Left: with the text prompt below. Right: using the given motion only, without text guidance. Orange marks the given frames; blue marks the generated frames.'
+      : '';
+    guide.innerHTML = `<h3>${escape(content.title)}</h3><div class="task-guide-flow"><p><span>INPUT</span>${escape(content.input)}</p><p><span>OUTPUT</span>${escape(content.output)}</p></div>${comparison ? `<p class="task-guide-reading">${escape(comparison)}</p>` : ''}`;
+  }
   function renderInspector() {
     if (!state.sample) return;
     const sample = state.sample;
+    renderGuide(sample);
     let body = '';
     if (sample.comparison) body += `<div class="comparison-legend">${sample.comparison.models.map((model, index) => `<label class="model-${String.fromCharCode(97 + index)}" style="${model.color ? `color:${escape(model.color)}` : ''}" for="model-visible-${index}"><input id="model-visible-${index}" type="checkbox" ${state.visibleModels[index] !== false ? 'checked' : ''} ${state.loading ? 'disabled' : ''}> ${String.fromCharCode(65 + index)} · ${escape(model.label)}</label>`).join('')}</div><div class="task-block"><label for="separation">Starting gap: <output id="separation-value">${state.separation ?? 3} m</output></label><input type="range" id="separation" min="1" max="8" step="0.25" value="${state.separation ?? 3}"><p class="description">Adjacent starting body centers use this spacing. Original movement and timing are preserved.</p></div>`;
     if (state.task === 't2m') body += `<div><p class="eyebrow">${sample.generated ? 'TEXT PROMPT' : 'REFERENCE DESCRIPTION'}</p><blockquote class="prompt-card">${escape(sample.prompt || 'No prompt supplied for this file.')}</blockquote></div>${sample.generated ? '' : '<div class="empty-output">Viewer sample only. Generated results will replace this reference motion.</div>'}`;
-    if (state.task === 'm2t') body = `<div class="caption-result motius-result"><p class="eyebrow">${escape(sample.predictionLabel ?? 'MÖBIUS')}</p>${sample.predictedCaption ? `<blockquote class="prompt-card motius-caption">${escape(sample.predictedCaption)}</blockquote>` : '<div class="empty-output">No MÖBIUS caption connected yet.</div>'}</div>${sample.fixedConditionCaption ? `<div class="caption-result fixed-condition-result"><p class="eyebrow">${escape(sample.fixedConditionLabel ?? 'MOTIUS 0.6B')}</p><blockquote class="prompt-card fixed-condition-caption">${escape(sample.fixedConditionCaption)}</blockquote></div>` : ''}${sample.motiongpt3Caption ? `<div class="caption-result motiongpt-result"><p class="eyebrow">MOTIONGPT3</p><blockquote class="prompt-card motiongpt-caption">${escape(sample.motiongpt3Caption)}</blockquote></div>` : ''}${sample.captionReview ? `<div class="caption-result reference-result"><p class="eyebrow">REFERENCE</p><blockquote class="prompt-card reference-caption">${escape(sample.prompt)}</blockquote></div>` : `<details><summary class="description">Reference description</summary><p class="description">${escape(sample.prompt)}</p></details>`}`;
+    if (state.task === 'm2t') body = `<div class="caption-result motius-result"><p class="eyebrow">${escape(sample.predictionLabel ?? 'MÖBIUS')}</p>${sample.predictedCaption ? `<blockquote class="prompt-card motius-caption">${escape(sample.predictedCaption)}</blockquote>` : '<div class="empty-output">No MÖBIUS caption connected yet.</div>'}</div>${sample.fixedConditionCaption ? `<div class="caption-result fixed-condition-result"><p class="eyebrow">${escape(sample.fixedConditionLabel ?? 'MOTIUS 0.6B')}</p><blockquote class="prompt-card fixed-condition-caption">${escape(sample.fixedConditionCaption)}</blockquote></div>` : ''}${sample.motiongpt3Caption ? `<div class="caption-result motiongpt-result"><p class="eyebrow">MOTIONGPT3</p><blockquote class="prompt-card motiongpt-caption">${escape(sample.motiongpt3Caption)}</blockquote></div>` : ''}${sample.captionReview ? `<div class="caption-result reference-result"><p class="eyebrow">REFERENCE DESCRIPTION</p><blockquote class="prompt-card reference-caption">${escape(sample.prompt)}</blockquote></div>` : `<details><summary class="description">Reference description</summary><p class="description">${escape(sample.prompt)}</p></details>`}`;
     if (state.task === 'structure') body = sample.structuralPair
-      ? `<div class="structure-caption"><p class="eyebrow">SOURCE TEXT</p><blockquote class="prompt-card">${escape(sample.prompt)}</blockquote></div><div class="structure-controls"><div class="pair-legend"><span><i class="pair-dot known-orange"></i> Known frames</span><span><i class="pair-dot generated-blue"></i> Generated frames</span></div><p class="description">${escape(sample.structuralPair.knownLabel ?? 'Known prefix')}: ${Math.round(sample.structuralPair.knownRatio * 100)}%</p>${sample.structuralProtocol === 'keyframe' ? '<p class="description">Orange keyframe poses remain fixed at their original positions. The animated motion overlaps them when it reaches a known frame.</p>' : ''}<div class="task-actions"><button id="show-full" aria-pressed="${!state.onlyKnown}">Full sequence</button><button id="show-known" aria-pressed="${state.onlyKnown}">Known poses only</button><button id="next-boundary">Next boundary</button></div></div>`
-      : `<div class="task-block"><label for="protocol">Completion task</label><select id="protocol">${Object.entries(protocols).map(([key, value]) => `<option value="${key}" ${key === state.protocol ? 'selected' : ''}>${value.name}</option>`).join('')}</select><p class="description">${protocols[state.protocol].description}</p></div><div class="task-actions"><button id="show-full" aria-pressed="${!state.onlyKnown}">Full sequence</button><button id="show-known" aria-pressed="${state.onlyKnown}">Known poses only</button><button id="next-boundary">Next boundary</button></div><div class="empty-output">${state.illustrative ? 'Mask illustration on a reference sequence. Orange indicates a region to complete, not a generated result.' : 'Blue marks observed frames; orange marks the completion region.'}</div>`;
-    if (state.task === 'edit' && sample.comparison) body += `<div><p class="eyebrow">EDIT INSTRUCTION</p><blockquote class="prompt-card">${escape(sample.edit?.instruction)}</blockquote></div><p class="description">Select the methods to compare. Playback shares original seconds and camera.</p>`;
+      ? `<div class="structure-caption"><p class="eyebrow">TEXT GUIDANCE · INPUT PROMPT</p><blockquote class="prompt-card">${escape(sample.prompt)}</blockquote></div><div class="structure-controls"><div class="pair-legend"><span><i class="pair-dot known-orange"></i> Given motion</span><span><i class="pair-dot generated-blue"></i> Generated motion</span></div><p class="description">${Math.round(sample.structuralPair.knownRatio * 100)}% of frames supplied as input${sample.structuralProtocol === 'keyframe' ? ' · selected input poses shown in orange' : ''}</p>${sample.structuralProtocol === 'keyframe' ? '<p class="description">Orange keyframe poses remain fixed at their original positions. The animated motion overlaps them when it reaches a known frame.</p>' : ''}<div class="task-actions"><button id="show-full" aria-pressed="${!state.onlyKnown}">Full sequence</button><button id="show-known" aria-pressed="${state.onlyKnown}">Show input poses</button><button id="next-boundary">Next transition</button></div></div>`
+      : `<div class="task-block"><label for="protocol">Completion task</label><select id="protocol">${Object.entries(protocols).map(([key, value]) => `<option value="${key}" ${key === state.protocol ? 'selected' : ''}>${value.name}</option>`).join('')}</select><p class="description">${protocols[state.protocol].description}</p></div><div class="task-actions"><button id="show-full" aria-pressed="${!state.onlyKnown}">Full sequence</button><button id="show-known" aria-pressed="${state.onlyKnown}">Show input poses</button><button id="next-boundary">Next transition</button></div><div class="empty-output">${state.illustrative ? 'Mask illustration on a reference sequence. Orange indicates a region to complete, not a generated result.' : 'Blue marks observed frames; orange marks the completion region.'}</div>`;
+    if (state.task === 'edit' && sample.comparison) body += `<div><p class="eyebrow">EDIT INSTRUCTION</p><blockquote class="prompt-card">${escape(sample.edit?.instruction)}</blockquote></div><p class="description">Compare the gray original motion with the blue edited result. Use the checkboxes to show or hide either motion.</p>`;
     if (state.task === 'edit' && !sample.comparison) body = `<div><p class="eyebrow">EDIT INSTRUCTION</p>${sample.edit?.instruction ? `<blockquote class="prompt-card">${escape(sample.edit.instruction)}</blockquote>` : '<div class="empty-output">An instruction and its paired output have not been connected yet.</div>'}</div><div class="task-actions"><button id="edit-split" aria-pressed="${state.editMode === 'split'}">Side by side</button><button id="edit-overlay" aria-pressed="${state.editMode === 'overlay'}" ${sample.edit?.output ? '' : 'disabled'}>Overlay</button></div><p class="description">Shared viewpoint. Playback uses original seconds, preserving timing differences.</p>`;
     const technicalDetails = (sample.comparison && !catalog.directoryPreview) || sample.captionReview || sample.structuralPair || sample.editReview ? '' : `<div class="facts"><span>${escape(sample.id)}</span><span>${state.motion ? `${state.motion.meta.frames} frames` : 'Loading'}</span><span>${state.motion ? `${state.motion.meta.fps} fps` : '—'}</span></div><details class="metadata"><summary>Sample details</summary><dl><dt>Source</dt><dd>${escape(sample.sourceDataset)}</dd><dt>Provenance</dt><dd>${escape(sample.provenance)}</dd><dt>Checkpoint</dt><dd>${escape(sample.checkpoint ?? 'Not connected')}</dd><dt>Seed</dt><dd>${escape(sample.seed ?? '—')}</dd>${sample.generation ? `<dt>Weights</dt><dd>${escape(sample.generation.weights)}</dd><dt>Steps / CFG</dt><dd>${sample.generation.num_timesteps} / ${sample.generation.guidance_scale}</dd><dt>Source index</dt><dd>${sample.sourceIndex}</dd>` : ""}</dl></details>`;
     $('#inspector').innerHTML = body + technicalDetails;
@@ -124,7 +150,7 @@ export function createStudio(root, task, catalog) {
     $('#ghosts').closest('label').hidden = keyframeAnchors;
     $('#mask-legend').hidden = !state.mask;
     $('#mask-legend').classList.toggle('pair-reversed', !!reversed);
-    $('#timeline-label').textContent = state.mask ? 'Condition timeline' : 'Motion timeline';
+    $('#timeline-label').textContent = state.mask ? 'Given / generated motion' : 'Motion timeline';
     const track = $('#mask-track'); track.replaceChildren();
     if (state.mask) for (const segment of maskSegments(state.mask)) {
       const item = document.createElement('i'); item.style.width = `${100 * (segment.end - segment.start) / state.mask.length}%`;
@@ -193,9 +219,9 @@ export function createStudio(root, task, catalog) {
       state.loading = false;
       $('#scrubber').max = state.duration;
       ['play', 'step-back', 'step-forward', 'scrubber'].forEach(id => $(`#${id}`).disabled = false);
-      $('#split-source').hidden = (task !== 'edit' && !sample.structuralPair) || sample.structuralPair?.single; $('#split-source').textContent = sample.structuralPair ? 'WITH SOURCE TEXT' : 'Source';
+      $('#split-source').hidden = (task !== 'edit' && !sample.structuralPair) || sample.structuralPair?.single; $('#split-source').textContent = sample.structuralPair ? 'WITH TEXT GUIDANCE' : 'Original motion';
       $('#split-output').hidden = (task !== 'edit' && !sample.structuralPair) || !edited;
-      $('#split-output').textContent = sample.structuralPair ? 'WITHOUT SOURCE TEXT' : 'Edited';
+      $('#split-output').textContent = sample.structuralPair ? 'MOTION INPUT ONLY · NO TEXT' : 'Edited motion';
       $('#edit-empty').hidden = task !== 'edit' || !!edited || !!sample.comparison;
       if (sample.comparison) { $('#split-source').hidden = true; $('#split-output').hidden = true; }
       const reference = task === 't2m' ? !sample.generated : task === 'structure' ? state.illustrative : task === 'm2t' ? !sample.predictedCaption : !edited;
@@ -230,10 +256,8 @@ export function createStudio(root, task, catalog) {
         root.querySelector('.provenance-bar').hidden = true;
       }
       if (task === 'structure' && sample.structuralPair) {
-        const ratio = Math.round(sample.structuralPair.knownRatio * 100);
-        const sourceNumber = sample.hyMmReview ? ` ${String(sample.originalPosition).padStart(2, '0')}` : '';
-        $('#stage-title').textContent = `${sample.structuralPair.label ?? 'Continuation'}${sourceNumber} · ${ratio}% ${(sample.structuralPair.knownLabel ?? 'known prefix').toLowerCase()}`;
-        $('#stage-tag').textContent = sample.structuralProtocol === 'keyframe' ? 'ORANGE: FIXED KEYFRAMES · BLUE: MOTION' : 'ORANGE: KNOWN · BLUE: GENERATED';
+        $('#stage-title').textContent = `${structuralLabels[sample.structuralProtocol] ?? 'Motion completion'} · ${sample.structuralPair.single ? 'Text-guided result' : 'With vs. without text guidance'}`;
+        $('#stage-tag').textContent = sample.structuralProtocol === 'keyframe' ? 'ORANGE: FIXED KEYFRAMES · BLUE: MOTION' : 'ORANGE: GIVEN · BLUE: GENERATED';
         root.querySelector('.provenance-bar').hidden = true;
       }
       if (task === 'edit' && sample.editReview) {
