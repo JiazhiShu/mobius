@@ -61,9 +61,9 @@ export function createStudio(root, task, catalog) {
     $('#play').setAttribute('aria-label', state.playing ? 'Pause motion' : 'Play motion');
   }
   const completionGuides = {
-    continuation: {title: 'Continue the motion', input: 'The beginning of a motion.', output: 'Generate what happens next.'},
-    prefix: {title: 'Generate the beginning', input: 'The ending of a motion.', output: 'Generate the motion leading up to that ending.'},
-    inbetween: {title: 'Fill the gap between two motions', input: 'The beginning and ending of a motion.', output: 'Generate a transition that connects them.'},
+    continuation: {title: 'Continue the motion', input: 'The beginning of a motion.', output: 'Generate the remaining motion.'},
+    prefix: {title: 'Generate the beginning', input: 'The ending of a motion.', output: 'Generate the missing beginning.'},
+    inbetween: {title: 'Fill the missing motion', input: 'The beginning and ending of a motion.', output: 'Generate the motion between them.'},
     keyframe: {title: 'Connect the key poses', input: 'A set of poses at specific times.', output: 'Generate the motion between the given poses.'},
   };
   const guide = document.createElement('section');
@@ -72,9 +72,9 @@ export function createStudio(root, task, catalog) {
   root.querySelector('.studio-body').before(guide);
   function renderGuide(sample) {
     const content = task === 'structure' ? completionGuides[sample.structuralProtocol ?? state.protocol] : {
-      t2m: {title: 'One description → generated motion', input: 'A text prompt describing the action.', output: 'Each selected model generates its own motion from the same prompt.'},
-      m2t: {title: 'One motion → a written description', input: 'The animated motion in the viewer.', output: 'Each model describes the action in words. Compare its caption with the reference.'},
-      edit: {title: 'Original motion + instruction → edited motion', input: 'The original motion and the edit instruction.', output: 'MÖBIUS changes the motion to follow the instruction. Gray is the original; blue is the edited result.'},
+      t2m: {title: 'Text prompt → generated motion', input: 'A text prompt.', output: 'Motion generated from the same prompt by each selected model.'},
+      m2t: {title: 'Motion → text description', input: 'The animated motion in the viewer.', output: 'A text description from each model. Compare with the reference description.'},
+      edit: {title: 'Original motion + instruction → edited motion', input: 'The original motion and the edit instruction.', output: 'The edited motion. Gray: original. Blue: MÖBIUS result.'},
     }[task];
     if (!content) { guide.hidden = true; return; }
     guide.hidden = false;
