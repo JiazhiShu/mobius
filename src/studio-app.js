@@ -243,7 +243,8 @@ export function createStudio(root, task, catalog) {
         root.querySelector('.provenance-bar').hidden = true;
       }
       applyMask(); seek(0); renderInspector(); setStatus('');
-      // Deliberately start paused: the user controls playback and reduced-motion preferences are respected.
+      // Start each loaded example automatically; offscreen viewers do not advance.
+      setPlaying(true);
       viewer.render();
     } catch (error) {
       if (request !== state.request) return;
@@ -281,13 +282,15 @@ export function createStudio(root, task, catalog) {
   const observer = new IntersectionObserver(entries => {
     visible = entries[0].isIntersecting;
     if (visible && !started && samples.length) { started = true; selectSample(state.sample); }
-    if (!visible) setPlaying(false);
   }, {threshold: 0});
   observer.observe(root);
   return {
     tick(elapsed) {
       if (!visible || !viewer) return;
-      if (state.playing) { const next = state.seconds + elapsed * state.speed; seek(next); if (next >= state.duration) setPlaying(false); }
+      if (state.playing && state.duration > 0) {
+        const next = state.seconds + elapsed * state.speed;
+        seek(next >= state.duration ? next % state.duration : next);
+      }
       viewer.render();
     },
     pause() { setPlaying(false); },
@@ -329,7 +332,6 @@ async function initialize() {
       animation = requestAnimationFrame(tick);
     }
     animation = requestAnimationFrame(tick);
-    document.addEventListener('visibilitychange', () => { if (document.hidden) controllers.forEach(controller => controller.pause()); });
     window.addEventListener('pagehide', event => {
       controllers.forEach(controller => controller.pause());
       if (!event.persisted) { cancelAnimationFrame(animation); controllers.forEach(controller => controller.dispose()); }
