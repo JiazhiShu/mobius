@@ -12,7 +12,12 @@ export function createStudio(root, task, catalog) {
   namespace(root);
   const $ = selector => root.querySelector(selector.replace(/#([\w-]+)/g, `#${task}-$1`));
   const ids = catalog.tasks?.[task] ?? catalog.samples.filter(sample => task === 't2m' ? sample.generated : sample.reference).map(sample => sample.id);
-  const allSamples = ids.map(id => catalog.samples.find(sample => sample.id === id)).filter(Boolean);
+  const allSamples = ids.map(id => catalog.samples.find(sample => sample.id === id)).filter(Boolean).map(sample => {
+    if (task !== 'edit' || catalog.directoryPreview || !sample.comparison) return sample;
+    // Keep archived baseline assets, but only load and expose Source / Ours on the project page.
+    return {...sample, comparison: {...sample.comparison,
+      models: sample.comparison.models.filter(model => !/^(MotionFix|MotionLab)$/i.test(model.label))}};
+  });
   let samples = allSamples;
   const state = {task, protocol: 'inbetween', sample: null, catalog, motion: null, seconds: 0, duration: 0,
     playing: false, speed: 1, mask: null, onlyKnown: false, editMode: 'split', loading: true, request: 0, illustrative: false, motions: [], visibleModels: []};
@@ -234,7 +239,7 @@ export function createStudio(root, task, catalog) {
       if (task === 'edit' && sample.editReview) {
         const displayNumber = sample.comparison ? samples.findIndex(item => item.id === sample.id) + 1 : sample.originalPosition ?? samples.findIndex(item => item.id === sample.id) + 1;
         $('#stage-title').textContent = `Edit ${String(displayNumber).padStart(2, '0')} · Motion edit`;
-        $('#stage-tag').textContent = sample.comparison ? 'SOURCE · MOTIONFIX · MOTIONLAB · OURS' : 'SOURCE ↔ EDITED RESULT';
+        $('#stage-tag').textContent = sample.comparison ? sample.comparison.models.map(model => model.label).join(' ↔ ') : 'SOURCE ↔ EDITED RESULT';
         root.querySelector('.provenance-bar').hidden = true;
       }
       applyMask(); seek(0); renderInspector(); setStatus('');
