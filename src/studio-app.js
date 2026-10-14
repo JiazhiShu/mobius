@@ -256,7 +256,8 @@ export function createStudio(root, task, catalog) {
         const exampleNumber = String(samples.findIndex(item => item.id === sample.id) + 1).padStart(2, '0');
         $('#stage-title').textContent = `Example ${exampleNumber} · Model comparison`;
         $('#stage-tag').textContent = sample.comparison.models.map((model, index) => `${String.fromCharCode(65 + index)}: ${colorNames[index]}`).join(' · ');
-        $('.reference-badge').textContent = 'PRECOMPUTED COMPARISON';
+        $('.reference-badge').textContent = '';
+        $('.reference-badge').hidden = true;
         $('#provenance-text').textContent = sample.comparison.models.flatMap((model, index) => { const motion = state.motions[index]; return motion ? [`${String.fromCharCode(65 + index)}: ${model.label} · ${motion.meta.frames} frames at ${motion.meta.fps} fps`] : []; }).join(' | ');
       }
       if (task === 'm2t' && sample.captionReview) {
