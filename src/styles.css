@@ -70,3 +70,6 @@ html{scroll-behavior:smooth;scroll-padding-top:100px}
 .paper-authors{margin:26px 0 36px;text-align:center;color:var(--ink)}
 .author-row{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 24px;margin:10px 0;font-size:19px;line-height:1.6}.author-row>span{white-space:nowrap}.paper-authors sup{font-size:.68em;vertical-align:super;line-height:0;margin-left:2px}.author-affiliations{margin:19px 0 15px;font-size:15px;line-height:1.7;color:#536171}.author-affiliations p{margin:2px 0}.author-affiliations sup{margin-right:5px}.author-contributions{display:flex;justify-content:center;flex-wrap:wrap;gap:8px 22px;font-size:13px;line-height:1.7;color:#657080}.author-contributions sup{margin-right:3px}
 @media(max-width:760px){.paper-authors{margin:21px 0 28px}.author-row{font-size:16px;gap:7px 16px}.author-affiliations{font-size:13px}.author-contributions{font-size:12px;gap:5px 14px}}
+
+/* Author homepages retain the paper author layout. */
+.author-row a{text-decoration:underline;text-decoration-color:#a6bac4;text-underline-offset:4px;text-decoration-thickness:1px}.author-row a:hover,.author-row a:focus-visible{color:#237da4;text-decoration-color:currentColor}
