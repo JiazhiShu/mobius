@@ -1,9 +1,11 @@
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 const hero=document.querySelector('.hero-video'),pause=document.querySelector('.hero-pause');let userPaused=reduced;
+if(hero&&pause){
 const playHero=()=>{if(!hero.src)hero.src=hero.dataset.src;hero.play().catch(()=>{});pause.textContent='Pause Ⅱ';pause.setAttribute('aria-label','Pause motion preview')};
 pause.textContent=reduced?'Play ▷':'Pause Ⅱ';pause.onclick=()=>{userPaused=!userPaused;if(userPaused){hero.pause();pause.textContent='Play ▷';pause.setAttribute('aria-label','Play motion preview')}else playHero()};
 const ho=new IntersectionObserver(([e])=>{if(e.isIntersecting&&!userPaused&&!document.hidden)playHero();else hero.pause()},{threshold:.2});ho.observe(hero);
 document.addEventListener('visibilitychange',()=>{if(document.hidden)hero.pause();else if(!userPaused&&hero.getBoundingClientRect().bottom>0&&hero.getBoundingClientRect().top<innerHeight)playHero()});
+}
 const reveal=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('is-revealed');reveal.unobserve(e.target)}}),{threshold:.05});
 if(!reduced)document.querySelectorAll('.task-heading,.benchmark-heading,.pipeline-figure').forEach(e=>{e.classList.add('reveal-ready');reveal.observe(e)});
 const known='#e9823f',gen='#3275d1';const patterns={continuation:[1,1,1,0,0,0,0,0,0,0,0,0],prefix:[0,0,0,0,0,0,0,0,0,1,1,1],inbetween:[1,1,0,0,0,0,0,0,0,0,1,1],keyframe:[1,0,0,1,0,0,1,0,0,1,0,1]};const hints={continuation:'Given the beginning',prefix:'Given the ending',inbetween:'Given both ends',keyframe:'Given sparse poses'};

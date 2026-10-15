@@ -67,3 +67,10 @@
 .studio-preview [data-task=m2t] .fixed-condition-caption{font-weight:700;font-synthesis:weight}
 .studio-preview [data-task=t2m] .task-guide .prompt-card{margin:0}
 .studio-preview .demo-video-section video{height:auto;aspect-ratio:16/9}
+
+/* Paper-first opening: title, authors, then the full demo. */
+.studio-preview .paper-intro{padding:48px 0 30px;text-align:center}
+.studio-preview .paper-intro h1{max-width:1240px;margin:0 auto;text-align:center;font-size:clamp(30px,3.3vw,46px);line-height:1.2;letter-spacing:.01em}
+.studio-preview .paper-intro .paper-authors{margin:26px 0 0}
+.studio-preview .paper-intro+.demo-video-section{padding-top:0;padding-bottom:64px}
+@media(max-width:760px){.studio-preview .paper-intro{padding:30px 0 24px}.studio-preview .paper-intro h1{font-size:clamp(27px,7vw,36px);line-height:1.2}.studio-preview .paper-intro .paper-authors{margin-top:22px}.studio-preview .paper-intro+.demo-video-section{padding-bottom:40px}}
