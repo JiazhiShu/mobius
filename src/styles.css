@@ -52,11 +52,11 @@ html{scroll-behavior:smooth;scroll-padding-top:100px}
 @media(max-width:760px){.intro{padding:42px 0 46px}.intro h1{margin-bottom:28px;font-size:clamp(29px,9vw,40px);letter-spacing:-1.7px}.pipeline-figure{margin-left:-10px;margin-right:-10px;padding:9px;border-radius:12px}.benchmark-section{padding:34px 0 54px}.benchmark-heading h2{font-size:30px}.benchmark-title{display:block;padding:20px}.benchmark-title p{margin-top:9px}.benchmark-table th:first-child{padding-left:18px}.benchmark-note{padding:13px 18px}}
 
 /* MÖBIUS paper identity and figure placement. */
-.wordmark .logo{display:block;width:48px;height:30px;object-fit:contain;background:none;border-radius:0;padding:0}
+.wordmark .logo{display:block;width:48px;height:48px;object-fit:contain;object-position:center;flex-shrink:0;background:none;border-radius:0;padding:0}
 .teaser-figure{margin:0}
 .teaser-figure img{display:block;width:100%;height:auto}
 .pipeline-section{padding:48px 0 64px;border-top:1px solid var(--line)}
-@media(max-width:760px){.wordmark .logo{width:40px;height:25px}.pipeline-section{padding:34px 0 46px}.teaser-figure{margin:0 -18px}}
+@media(max-width:760px){.wordmark .logo{width:40px;height:40px}.pipeline-section{padding:34px 0 46px}.teaser-figure{margin:0 -18px}}
 
 .demo-video-section{padding:38px 0 64px;scroll-margin-top:100px}.demo-video-section video{display:block;width:100%;aspect-ratio:16/9;background:#f4f6f8;border:1px solid var(--line);border-radius:16px}.demo-video-section .benchmark-heading p{line-height:1.6}
 
