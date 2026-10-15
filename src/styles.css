@@ -73,3 +73,7 @@ html{scroll-behavior:smooth;scroll-padding-top:100px}
 
 /* Author homepages retain the paper author layout. */
 .author-row a{text-decoration:underline;text-decoration-color:#a6bac4;text-underline-offset:4px;text-decoration-thickness:1px}.author-row a:hover,.author-row a:focus-visible{color:#237da4;text-decoration-color:currentColor}
+
+/* Keep affiliations on one row when space permits. */
+.author-affiliations{display:flex;justify-content:center;align-items:baseline;flex-wrap:wrap;gap:6px 24px}.author-affiliations p{margin:0;white-space:nowrap}
+@media(max-width:760px){.author-affiliations{gap:6px 16px}}
