@@ -74,3 +74,11 @@
 .studio-preview .paper-intro .paper-authors{margin:26px 0 0}
 .studio-preview .paper-intro+.demo-video-section{padding-top:0;padding-bottom:64px}
 @media(max-width:760px){.studio-preview .paper-intro{padding:30px 0 24px}.studio-preview .paper-intro h1{font-size:clamp(27px,7vw,36px);line-height:1.2}.studio-preview .paper-intro .paper-authors{margin-top:22px}.studio-preview .paper-intro+.demo-video-section{padding-bottom:40px}}
+
+/* Keep the home link visible even when the task navigation scrolls on mobile. */
+.studio-preview .header-brand{display:flex;align-items:center;gap:24px;flex-shrink:0}
+.studio-preview .header-home{display:inline-flex;align-items:center;gap:7px;padding:8px 12px;border:1px solid #c6d9de;border-radius:7px;color:#315666;background:#fff;font-size:12px;font-weight:600;line-height:1;white-space:nowrap;transition:background .2s,border-color .2s}
+.studio-preview .header-home:hover{background:#edf5f6;border-color:#94b8c2}
+.studio-preview .header-home:focus-visible{outline:2px solid #3987a7;outline-offset:3px}
+@media(min-width:761px) and (max-width:1100px){.studio-preview .header-brand{gap:12px}.studio-preview .section-nav{gap:12px;font-size:11px}}
+@media(max-width:760px){.studio-preview .header-brand{justify-content:space-between;width:100%}}
