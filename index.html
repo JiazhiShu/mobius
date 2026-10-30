@@ -7,11 +7,17 @@
   <link rel="icon" href="./assets/mobius-icon-square.svg?v=20261015" type="image/svg+xml">
   <link rel="stylesheet" href="./src/styles.css?v=20261015-affiliation-row">
   <script type="importmap">{"imports":{"three":"./vendor/three/three.module.js"}}</script>
-<link rel="stylesheet" href="./src/studio-preview.css?v=20261015-simple-intro"></head>
+<link rel="stylesheet" href="./src/studio-preview.css?v=20261015-simple-intro"><link rel="stylesheet" href="./src/motion-wall.css?v=20261030"></head>
 <body class="studio-preview">
   <header class="site-header"><a class="wordmark" href="#top"><img class="logo" src="./assets/Mobius.svg" alt=""> <span class="paper-wordmark">Möbius</span></a><nav class="section-nav" aria-label="Motion tasks"><a href="#t2m">Motion Generation</a><a href="#m2t">Motion Understanding</a><a href="#structure">Motion Completion</a><a href="#edit">Motion Editing</a><a href="#benchmark">Benchmark</a></nav></header>
   <main>
-    <section class="intro paper-intro" id="top">
+    <section class="motion-wall" id="top" aria-label="Möbius text-to-motion showcase">
+      <div class="motion-wall-media"><video class="motion-wall-video" muted loop playsinline preload="metadata" poster="./assets/mobius-motion-wall-poster.jpg" aria-hidden="true"><source src="./assets/mobius-motion-wall-64.mp4" type="video/mp4"></video></div>
+      <div class="motion-wall-shade"></div>
+      <div class="motion-wall-content"><p class="motion-wall-kicker">MOTION &nbsp;·&nbsp; LANGUAGE</p><p class="motion-wall-title">Möbius</p><p class="motion-wall-subtitle">A Unified Motion-Language Model<br>Bridging Understanding and Generation</p><a class="motion-wall-link" href="#paper">Explore the model <span aria-hidden="true">↓</span></a></div>
+      <div class="motion-wall-footer"><span>64 motions generated from text</span><button type="button" class="motion-wall-toggle" aria-label="Pause motion showcase">Pause <span aria-hidden="true">Ⅱ</span></button></div>
+    </section>
+    <section class="intro paper-intro" id="paper">
 <h1>Möbius: A Unified Motion-Language Model<br>Bridging Understanding and Generation</h1>
 
       <div class="paper-authors" aria-label="Authors and affiliations">
@@ -99,6 +105,6 @@
       <div class="provenance-bar" hidden><span class="reference-badge">PRECOMPUTED RESULTS</span><p id="provenance-text"></p></div>
 </template>
   <noscript>This interactive viewer needs JavaScript enabled.</noscript>
-  <script type="module" src="./src/studio-app.js?v=20261014-clean-footer"></script><script type="module" src="./src/studio-preview.js?v=20261015-simple-intro"></script>
+  <script type="module" src="./src/studio-app.js?v=20261014-clean-footer"></script><script type="module" src="./src/studio-preview.js?v=20261015-simple-intro"></script><script type="module" src="./src/motion-wall.js?v=20261030"></script>
 </body>
 </html>

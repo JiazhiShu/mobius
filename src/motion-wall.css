@@ -1,0 +1,17 @@
+.studio-preview .motion-wall{position:relative;width:100vw;height:calc(100svh - 76px);min-height:560px;max-height:980px;margin-inline:calc(50% - 50vw);overflow:hidden;background:#172b31;color:#fff;isolation:isolate}
+.motion-wall-media,.motion-wall-shade{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.motion-wall-video{display:block;width:100%;height:100%;object-fit:cover;transform:scale(3.9)}
+.motion-wall.is-playing .motion-wall-video{animation:wall-pull-back 4.8s cubic-bezier(.22,.7,.2,1) both}
+.motion-wall.no-video .motion-wall-video{transform:scale(1)}
+.motion-wall-shade{background:linear-gradient(180deg,rgba(10,22,27,.34),rgba(10,21,28,.58) 48%,rgba(9,21,27,.53));z-index:1}
+.motion-wall-content{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 24px 74px;text-shadow:0 2px 24px #0b1c26a8}
+.motion-wall-kicker{margin:0 0 22px;font-size:10px;font-weight:700;letter-spacing:.28em;color:#e8f0ed}
+.motion-wall-title{font-family:PaperSerif,Georgia,serif;font-variant-caps:small-caps;font-weight:400;font-size:clamp(68px,9vw,144px);line-height:.95;letter-spacing:.015em;margin:0 0 20px}
+.motion-wall-subtitle{font-family:PaperSerif,Georgia,serif;font-size:clamp(20px,2.25vw,35px);line-height:1.3;letter-spacing:.01em;max-width:850px;margin:0}
+.motion-wall-link{margin-top:42px;padding:13px 0;border-bottom:1px solid #ffffffb8;font-size:11px;font-weight:650;letter-spacing:.14em;text-transform:uppercase;transition:opacity .2s}
+.motion-wall-link:hover{opacity:.75}.motion-wall-link span{margin-left:18px;font-size:17px}
+.motion-wall-footer{position:absolute;z-index:3;left:clamp(20px,4vw,64px);right:clamp(20px,4vw,64px);bottom:24px;display:flex;justify-content:space-between;align-items:center;gap:20px;color:#fff;font-size:10px;letter-spacing:.13em;text-transform:uppercase;text-shadow:0 1px 10px #14262b}
+.motion-wall-toggle{color:#fff;background:#11293077;border:1px solid #ffffff8c;border-radius:999px;padding:8px 14px;letter-spacing:.06em;font-size:10px;text-transform:uppercase}.motion-wall-toggle:hover{background:#112930bb}
+@keyframes wall-pull-back{0%,15%{transform:scale(3.9)}100%{transform:scale(1)}}
+@media(max-width:760px){.studio-preview .motion-wall{height:calc(100svh - 96px);min-height:500px}.motion-wall-content{padding-inline:22px}.motion-wall-title{font-size:clamp(64px,17vw,96px)}.motion-wall-subtitle{font-size:20px;line-height:1.35}.motion-wall-kicker{margin-bottom:18px}.motion-wall-link{margin-top:30px}.motion-wall-footer{bottom:16px;font-size:9px}}
+@media(prefers-reduced-motion:reduce){.motion-wall-video,.motion-wall.is-playing .motion-wall-video{animation:none;transform:scale(1)}.motion-wall-link{transition:none}}
