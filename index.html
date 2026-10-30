@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Möbius: A Unified Motion-Language Model Bridging Understanding and Generation</title>
-  <meta name="description" content="MÖBIUS is a unified model for bidirectional human motion understanding and synthesis.">
+  <meta name="description" content="Möbius is a unified model for bidirectional human motion understanding and synthesis.">
   <link rel="icon" href="./assets/mobius-icon-square.svg?v=20261015" type="image/svg+xml">
-  <link rel="stylesheet" href="./src/styles.css?v=20261015-affiliation-row">
+  <link rel="stylesheet" href="./src/styles.css?v=20261030-mobius-smallcaps">
   <script type="importmap">{"imports":{"three":"./vendor/three/three.module.js"}}</script>
 <link rel="stylesheet" href="./src/studio-preview.css?v=20261030-home-link"></head>
 <body class="studio-preview">
@@ -21,12 +21,12 @@
         <p class="author-contributions"><span><sup>*</sup>Equal contribution.</span><span><sup>†</sup>Project lead.</span><span><sup>‡</sup>Corresponding authors.</span></p>
       </div>
 </section>
-<section class="demo-video-section" id="demo-video" aria-label="MÖBIUS demonstration video"><video width="1920" height="1080" controls playsinline preload="auto" poster="./assets/mobius-full-demo-v4-poster.jpg" aria-label="MÖBIUS demo: motion generation, understanding, editing, and a complete workflow"><source src="./assets/mobius-full-demo-v26-edit-slide.mp4" type="video/mp4">Your browser does not support embedded video.</video></section>
+<section class="demo-video-section" id="demo-video" aria-label="Möbius demonstration video"><video width="1920" height="1080" controls playsinline preload="auto" poster="./assets/mobius-full-demo-v4-poster.jpg" aria-label="Möbius demo: motion generation, understanding, editing, and a complete workflow"><source src="./assets/mobius-full-demo-v26-edit-slide.mp4" type="video/mp4">Your browser does not support embedded video.</video></section>
     <section class="task-section" id="t2m" aria-labelledby="t2m-heading"><div class="task-heading"><div><p class="eyebrow">01 / MOTION GENERATION</p><h2 id="t2m-heading">Text-to-Motion Generation</h2></div><span class="section-chip">15 precomputed comparisons</span></div><div class="studio" data-task="t2m"></div></section>
     <section class="task-section" id="m2t" aria-labelledby="m2t-heading"><div class="task-heading"><div><p class="eyebrow">02 / MOTION UNDERSTANDING</p><h2 id="m2t-heading">Motion-to-Text Understanding</h2></div><span class="section-chip">11 selected samples</span></div><div class="studio" data-task="m2t"></div></section>
-    <section class="task-section" id="structure" aria-labelledby="structure-heading"><div class="task-heading"><div><p class="eyebrow">03 / MOTION COMPLETION</p><h2 id="structure-heading">Motion Completion</h2><p>Give a partial motion, with or without a text prompt. MÖBIUS completes the missing motion.</p></div><span class="section-chip">4 tasks · 32 selected</span></div><div class="studio" data-task="structure"></div></section>
+    <section class="task-section" id="structure" aria-labelledby="structure-heading"><div class="task-heading"><div><p class="eyebrow">03 / MOTION COMPLETION</p><h2 id="structure-heading">Motion Completion</h2><p>Give a partial motion, with or without a text prompt. <span class="mobius-name">Möbius</span> completes the missing motion.</p></div><span class="section-chip">4 tasks · 32 selected</span></div><div class="studio" data-task="structure"></div></section>
     <section class="task-section" id="edit" aria-labelledby="edit-heading"><div class="task-heading"><div><p class="eyebrow">04 / MOTION EDITING</p><h2 id="edit-heading">Motion Editing</h2></div><span class="section-chip">7 selected samples</span></div><div class="studio" data-task="edit"></div></section>
-    <section id="method" class="pipeline-section" aria-labelledby="pipeline-heading"><div class="benchmark-heading"><p class="eyebrow">METHOD OVERVIEW</p><h2 id="pipeline-heading">MÖBIUS Pipeline</h2></div><figure class="pipeline-figure"><a href="./assets/pipeline-v2.pdf" target="_blank" rel="noopener" aria-label="Open the full-resolution pipeline PDF"><img src="./assets/pipeline-v2.webp" width="3333" height="1078" loading="lazy" decoding="async" alt="MÖBIUS architecture: language tokens, clean motion, and noisy motion share a unified backbone for motion understanding, generation, completion, and editing."></a><figcaption><span><strong>Pipeline overview.</strong> A unified motion-language backbone connects text and motion through shared multimodal attention, supporting motion understanding, generation, completion, and editing.</span><a href="./assets/pipeline-v2.pdf" target="_blank" rel="noopener">View full-resolution PDF ↗</a></figcaption></figure></section>
+    <section id="method" class="pipeline-section" aria-labelledby="pipeline-heading"><div class="benchmark-heading"><p class="eyebrow">METHOD OVERVIEW</p><h2 id="pipeline-heading"><span class="mobius-name">Möbius</span> Pipeline</h2></div><figure class="pipeline-figure"><a href="./assets/pipeline-v2.pdf" target="_blank" rel="noopener" aria-label="Open the full-resolution pipeline PDF"><img src="./assets/pipeline-v2.webp" width="3333" height="1078" loading="lazy" decoding="async" alt="Möbius architecture: language tokens, clean motion, and noisy motion share a unified backbone for motion understanding, generation, completion, and editing."></a><figcaption><span><strong>Pipeline overview.</strong> A unified motion-language backbone connects text and motion through shared multimodal attention, supporting motion understanding, generation, completion, and editing.</span><a href="./assets/pipeline-v2.pdf" target="_blank" rel="noopener">View full-resolution PDF ↗</a></figcaption></figure></section>
     <section class="benchmark-section" id="benchmark" aria-labelledby="benchmark-heading">
       <div class="benchmark-heading"><p class="eyebrow">QUANTITATIVE RESULTS</p><h2 id="benchmark-heading">Benchmark</h2><p>Results on the HumanML3D test set.</p></div>
 
@@ -74,7 +74,7 @@
         <p class="benchmark-note"><strong>Bold</strong> and <span class="second">underline</span> indicate the best and second-best model scores.</p>
       </article>
     </section>
-    <footer><span>Möbius: A Unified Motion-Language Model Bridging Understanding and Generation</span></footer>
+    <footer><span><span class="mobius-name">Möbius</span>: A Unified Motion-Language Model Bridging Understanding and Generation</span></footer>
   </main>
   <template id="viewer-template"><div class="case-nav"><div><span class="case-eyebrow">EXAMPLE</span><span id="case-count">01 / 08</span></div><div class="case-controls"><button id="previous-case" aria-label="Previous example">←</button><label class="sr-only" for="case-select">Choose example</label><select id="case-select"></select><button id="next-case" aria-label="Next example">→</button></div></div>      <div class="studio-body">
         <div class="viewer-column">
@@ -99,6 +99,6 @@
       <div class="provenance-bar" hidden><span class="reference-badge">PRECOMPUTED RESULTS</span><p id="provenance-text"></p></div>
 </template>
   <noscript>This interactive viewer needs JavaScript enabled.</noscript>
-  <script type="module" src="./src/studio-app.js?v=20261014-clean-footer"></script><script type="module" src="./src/studio-preview.js?v=20261015-simple-intro"></script>
+  <script type="module" src="./src/studio-app.js?v=20261030-mobius-smallcaps"></script><script type="module" src="./src/studio-preview.js?v=20261015-simple-intro"></script>
 </body>
 </html>

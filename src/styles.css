@@ -77,3 +77,6 @@ html{scroll-behavior:smooth;scroll-padding-top:100px}
 /* Keep affiliations on one row when space permits. */
 .author-affiliations{display:flex;justify-content:center;align-items:baseline;flex-wrap:wrap;gap:6px 24px}.author-affiliations p{margin:0;white-space:nowrap}
 @media(max-width:760px){.author-affiliations{gap:6px 16px}}
+
+/* Use the paper’s small-cap treatment for the project name across the site. */
+.mobius-name{font-family:PaperSerif,'Times New Roman',Times,serif;font-variant-caps:small-caps;font-synthesis:small-caps;text-transform:none;font-weight:400;letter-spacing:.015em}
