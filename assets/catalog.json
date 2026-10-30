@@ -608,213 +608,6 @@
       }
     },
     {
-      "id": "edit_review_05",
-      "label": "02",
-      "prompt": "don't turn left. do a step to the right at the end",
-      "provenance": "model-generated-motion-edit",
-      "sourceDataset": "MotionFix test",
-      "reference": "assets/edit_02_source.json",
-      "generated": null,
-      "predictedCaption": null,
-      "structures": {},
-      "edit": {
-        "source": "assets/edit_02_source.json",
-        "output": "assets/edit_02_result.json",
-        "instruction": "don't turn left. do a step to the right at the end"
-      },
-      "editReview": true,
-      "checkpoint": "MÖBIUS 0.6B DDPM · 0020000 EMA · FP32 + SDPA · HY",
-      "seed": 2663197093,
-      "sourceIndex": 4,
-      "sourceId": "006131",
-      "sourceInitStrength": 0.9435332500098835,
-      "numFrames": 90,
-      "fps": 30,
-      "originalPosition": 5,
-      "editStatic": true,
-      "comparison": {
-        "models": [
-          {
-            "label": "Source",
-            "motion": "assets/edit_02_source.json",
-            "color": "#8593a4"
-          },
-          {
-            "label": "MotionFix",
-            "motion": "assets/edit_006131_motionfix.json",
-            "color": "#d6ad20"
-          },
-          {
-            "label": "MotionLab",
-            "motion": "assets/edit_006131_motionlab.json",
-            "color": "#9563d4"
-          },
-          {
-            "label": "MÖBIUS (Ours)",
-            "motion": "assets/edit_02_result.json",
-            "color": "#3275d1"
-          }
-        ]
-      },
-      "postprocessing": {
-        "method": "official HY only",
-        "source": "/efs/jiazhishu/Outputs/omni/evaluations/website_fp32_20261009/edit/motion_272/02.npy",
-        "translation_window": 11,
-        "translation_polyorder": 5,
-        "quaternion_sigma": 1.0
-      }
-    },
-    {
-      "id": "edit_review_08",
-      "label": "03",
-      "prompt": "move right arm more sideways, lower arms faster",
-      "provenance": "model-generated-motion-edit",
-      "sourceDataset": "MotionFix test",
-      "reference": "assets/edit_03_source.json",
-      "generated": null,
-      "predictedCaption": null,
-      "structures": {},
-      "edit": {
-        "source": "assets/edit_03_source.json",
-        "output": "assets/edit_03_result.json",
-        "instruction": "move right arm more sideways, lower arms faster"
-      },
-      "editReview": true,
-      "checkpoint": "Motius 0.6B · 0020000 EMA",
-      "seed": 4020818556,
-      "sourceIndex": 7,
-      "sourceId": "007018",
-      "sourceInitStrength": 0.5223366304249224,
-      "numFrames": 120,
-      "fps": 30,
-      "originalPosition": 8,
-      "editStatic": true,
-      "comparison": {
-        "models": [
-          {
-            "label": "Source",
-            "motion": "assets/edit_03_source.json",
-            "color": "#8593a4"
-          },
-          {
-            "label": "MotionFix",
-            "motion": "assets/edit_007018_motionfix.json",
-            "color": "#d6ad20"
-          },
-          {
-            "label": "MotionLab",
-            "motion": "assets/edit_007018_motionlab.json",
-            "color": "#9563d4"
-          },
-          {
-            "label": "MÖBIUS (Ours)",
-            "motion": "assets/edit_03_result.json",
-            "color": "#3275d1"
-          }
-        ]
-      }
-    },
-    {
-      "id": "edit_review_14",
-      "label": "04",
-      "prompt": "do not raise your arms",
-      "provenance": "model-generated-motion-edit",
-      "sourceDataset": "MotionFix test",
-      "reference": "assets/edit_04_source.json",
-      "generated": null,
-      "predictedCaption": null,
-      "structures": {},
-      "edit": {
-        "source": "assets/edit_04_source.json",
-        "output": "assets/edit_04_result.json",
-        "instruction": "do not raise your arms"
-      },
-      "editReview": true,
-      "checkpoint": "Motius 0.6B · 0020000 EMA",
-      "seed": 2819335281,
-      "sourceIndex": 13,
-      "sourceId": "006418",
-      "sourceInitStrength": 0.6409854688325539,
-      "numFrames": 90,
-      "fps": 30,
-      "originalPosition": 14,
-      "editStatic": true,
-      "comparison": {
-        "models": [
-          {
-            "label": "Source",
-            "motion": "assets/edit_04_source.json",
-            "color": "#8593a4"
-          },
-          {
-            "label": "MotionFix",
-            "motion": "assets/edit_006418_motionfix.json",
-            "color": "#d6ad20"
-          },
-          {
-            "label": "MotionLab",
-            "motion": "assets/edit_006418_motionlab.json",
-            "color": "#9563d4"
-          },
-          {
-            "label": "MÖBIUS (Ours)",
-            "motion": "assets/edit_04_result.json",
-            "color": "#3275d1"
-          }
-        ]
-      }
-    },
-    {
-      "id": "edit_review_18",
-      "label": "05",
-      "prompt": "stretch arms sideways instead of keeping them down",
-      "provenance": "model-generated-motion-edit",
-      "sourceDataset": "MotionFix test",
-      "reference": "assets/edit_05_source.json",
-      "generated": null,
-      "predictedCaption": null,
-      "structures": {},
-      "edit": {
-        "source": "assets/edit_05_source.json",
-        "output": "assets/edit_05_result.json",
-        "instruction": "stretch arms sideways instead of keeping them down"
-      },
-      "editReview": true,
-      "checkpoint": "Motius 0.6B · 0020000 EMA",
-      "seed": 3949587485,
-      "sourceIndex": 17,
-      "sourceId": "004205",
-      "sourceInitStrength": 0.6933797491381128,
-      "numFrames": 120,
-      "fps": 30,
-      "originalPosition": 18,
-      "editStatic": true,
-      "comparison": {
-        "models": [
-          {
-            "label": "Source",
-            "motion": "assets/edit_05_source.json",
-            "color": "#8593a4"
-          },
-          {
-            "label": "MotionFix",
-            "motion": "assets/edit_004205_motionfix.json",
-            "color": "#d6ad20"
-          },
-          {
-            "label": "MotionLab",
-            "motion": "assets/edit_004205_motionlab.json",
-            "color": "#9563d4"
-          },
-          {
-            "label": "MÖBIUS (Ours)",
-            "motion": "assets/edit_05_result.json",
-            "color": "#3275d1"
-          }
-        ]
-      }
-    },
-    {
       "id": "struct_110k_continuation_003",
       "label": "Continuation 003",
       "prompt": "a person spins and kicks with its left leg.",
@@ -14339,6 +14132,240 @@
       "duration": 5.6,
       "sourceId": "t2mdataset_1700h_split05_motion_272.pt::external_objaverse_github_9000010000140237258_0-338",
       "m2tStatic": true
+    },
+    {
+      "id": "edit_motionfix_000101",
+      "label": "02",
+      "prompt": "open legs less",
+      "provenance": "model-generated-motion-edit",
+      "sourceDataset": "MotionFix test",
+      "reference": "assets/edit_mf50k_000101_source.json",
+      "generated": null,
+      "predictedCaption": null,
+      "structures": {},
+      "edit": {
+        "source": "assets/edit_mf50k_000101_source.json",
+        "output": "assets/edit_mf50k_000101_output.json",
+        "instruction": "open legs less"
+      },
+      "editReview": true,
+      "editStatic": true,
+      "checkpoint": "MÖBIUS 0.6B · 0050000 EMA · FP32 + SDPA",
+      "seed": 49,
+      "sourceIndex": 7,
+      "sourceId": "000101",
+      "sourceInitStrength": 0.0,
+      "numFrames": 120,
+      "fps": 30,
+      "comparison": {
+        "models": [
+          {
+            "label": "Source",
+            "motion": "assets/edit_mf50k_000101_source.json",
+            "color": "#8593a4"
+          },
+          {
+            "label": "MÖBIUS (Ours)",
+            "motion": "assets/edit_mf50k_000101_output.json",
+            "color": "#3275d1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "edit_motionfix_000180",
+      "label": "03",
+      "prompt": "start the squat earlier",
+      "provenance": "model-generated-motion-edit",
+      "sourceDataset": "MotionFix test",
+      "reference": "assets/edit_mf50k_000180_source.json",
+      "generated": null,
+      "predictedCaption": null,
+      "structures": {},
+      "edit": {
+        "source": "assets/edit_mf50k_000180_source.json",
+        "output": "assets/edit_mf50k_000180_output.json",
+        "instruction": "start the squat earlier"
+      },
+      "editReview": true,
+      "editStatic": true,
+      "checkpoint": "MÖBIUS 0.6B · 0050000 EMA · FP32 + SDPA",
+      "seed": 56,
+      "sourceIndex": 14,
+      "sourceId": "000180",
+      "sourceInitStrength": 0.0,
+      "numFrames": 120,
+      "fps": 30,
+      "comparison": {
+        "models": [
+          {
+            "label": "Source",
+            "motion": "assets/edit_mf50k_000180_source.json",
+            "color": "#8593a4"
+          },
+          {
+            "label": "MÖBIUS (Ours)",
+            "motion": "assets/edit_mf50k_000180_output.json",
+            "color": "#3275d1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "edit_motionfix_000219",
+      "label": "04",
+      "prompt": "Take smaller careless steps instead of hasty.",
+      "provenance": "model-generated-motion-edit",
+      "sourceDataset": "MotionFix test",
+      "reference": "assets/edit_mf50k_000219_source.json",
+      "generated": null,
+      "predictedCaption": null,
+      "structures": {},
+      "edit": {
+        "source": "assets/edit_mf50k_000219_source.json",
+        "output": "assets/edit_mf50k_000219_output.json",
+        "instruction": "Take smaller careless steps instead of hasty."
+      },
+      "editReview": true,
+      "editStatic": true,
+      "checkpoint": "MÖBIUS 0.6B · 0050000 EMA · FP32 + SDPA",
+      "seed": 58,
+      "sourceIndex": 16,
+      "sourceId": "000219",
+      "sourceInitStrength": 0.0,
+      "numFrames": 120,
+      "fps": 30,
+      "comparison": {
+        "models": [
+          {
+            "label": "Source",
+            "motion": "assets/edit_mf50k_000219_source.json",
+            "color": "#8593a4"
+          },
+          {
+            "label": "MÖBIUS (Ours)",
+            "motion": "assets/edit_mf50k_000219_output.json",
+            "color": "#3275d1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "edit_motionfix_000236",
+      "label": "05",
+      "prompt": "sit down quicker.",
+      "provenance": "model-generated-motion-edit",
+      "sourceDataset": "MotionFix test",
+      "reference": "assets/edit_mf50k_000236_source.json",
+      "generated": null,
+      "predictedCaption": null,
+      "structures": {},
+      "edit": {
+        "source": "assets/edit_mf50k_000236_source.json",
+        "output": "assets/edit_mf50k_000236_output.json",
+        "instruction": "sit down quicker."
+      },
+      "editReview": true,
+      "editStatic": true,
+      "checkpoint": "MÖBIUS 0.6B · 0050000 EMA · FP32 + SDPA",
+      "seed": 60,
+      "sourceIndex": 18,
+      "sourceId": "000236",
+      "sourceInitStrength": 0.0,
+      "numFrames": 120,
+      "fps": 30,
+      "comparison": {
+        "models": [
+          {
+            "label": "Source",
+            "motion": "assets/edit_mf50k_000236_source.json",
+            "color": "#8593a4"
+          },
+          {
+            "label": "MÖBIUS (Ours)",
+            "motion": "assets/edit_mf50k_000236_output.json",
+            "color": "#3275d1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "edit_motionfix_000366",
+      "label": "06",
+      "prompt": "start standing not bend down",
+      "provenance": "model-generated-motion-edit",
+      "sourceDataset": "MotionFix test",
+      "reference": "assets/edit_mf50k_000366_source.json",
+      "generated": null,
+      "predictedCaption": null,
+      "structures": {},
+      "edit": {
+        "source": "assets/edit_mf50k_000366_source.json",
+        "output": "assets/edit_mf50k_000366_output.json",
+        "instruction": "start standing not bend down"
+      },
+      "editReview": true,
+      "editStatic": true,
+      "checkpoint": "MÖBIUS 0.6B · 0050000 EMA · FP32 + SDPA",
+      "seed": 66,
+      "sourceIndex": 24,
+      "sourceId": "000366",
+      "sourceInitStrength": 0.0,
+      "numFrames": 90,
+      "fps": 30,
+      "comparison": {
+        "models": [
+          {
+            "label": "Source",
+            "motion": "assets/edit_mf50k_000366_source.json",
+            "color": "#8593a4"
+          },
+          {
+            "label": "MÖBIUS (Ours)",
+            "motion": "assets/edit_mf50k_000366_output.json",
+            "color": "#3275d1"
+          }
+        ]
+      }
+    },
+    {
+      "id": "edit_motionfix_000524",
+      "label": "07",
+      "prompt": "keep hands placed outside of the hips.",
+      "provenance": "model-generated-motion-edit",
+      "sourceDataset": "MotionFix test",
+      "reference": "assets/edit_mf50k_000524_source.json",
+      "generated": null,
+      "predictedCaption": null,
+      "structures": {},
+      "edit": {
+        "source": "assets/edit_mf50k_000524_source.json",
+        "output": "assets/edit_mf50k_000524_output.json",
+        "instruction": "keep hands placed outside of the hips."
+      },
+      "editReview": true,
+      "editStatic": true,
+      "checkpoint": "MÖBIUS 0.6B · 0050000 EMA · FP32 + SDPA",
+      "seed": 73,
+      "sourceIndex": 31,
+      "sourceId": "000524",
+      "sourceInitStrength": 0.0,
+      "numFrames": 120,
+      "fps": 30,
+      "comparison": {
+        "models": [
+          {
+            "label": "Source",
+            "motion": "assets/edit_mf50k_000524_source.json",
+            "color": "#8593a4"
+          },
+          {
+            "label": "MÖBIUS (Ours)",
+            "motion": "assets/edit_mf50k_000524_output.json",
+            "color": "#3275d1"
+          }
+        ]
+      }
     }
   ],
   "tasks": {
@@ -14408,10 +14435,12 @@
     ],
     "edit": [
       "edit_review_02",
-      "edit_review_05",
-      "edit_review_08",
-      "edit_review_18",
-      "edit_review_14"
+      "edit_motionfix_000101",
+      "edit_motionfix_000180",
+      "edit_motionfix_000219",
+      "edit_motionfix_000236",
+      "edit_motionfix_000366",
+      "edit_motionfix_000524"
     ]
   }
 }
