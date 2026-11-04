@@ -83,8 +83,8 @@
 @media(min-width:761px) and (max-width:1100px){.studio-preview .header-brand{gap:12px}.studio-preview .section-nav{gap:12px;font-size:11px}}
 @media(max-width:760px){.studio-preview .header-brand{justify-content:space-between;width:100%}}
 
-/* Project repository link below the paper authors. */
-.paper-links{display:flex;justify-content:center;margin-top:22px}
+/* Paper and repository links below the paper authors. */
+.paper-links{display:flex;justify-content:center;align-items:center;flex-wrap:wrap;gap:12px;margin-top:22px}
 .paper-code-link{display:inline-flex;align-items:center;justify-content:center;gap:9px;min-height:44px;padding:10px 22px;border:1px solid #203f50;border-radius:999px;background:#203f50;color:#fff;text-decoration:none;font-size:14px;font-weight:600;line-height:1.4;transition:background .15s,border-color .15s}
 .paper-code-link:hover{background:#315b70;border-color:#315b70;color:#fff}
 .paper-code-link:focus-visible{outline:3px solid #3983a8;outline-offset:4px}
