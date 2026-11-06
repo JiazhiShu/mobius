@@ -1,5 +1,5 @@
 import {loadCatalog, loadMotion, protocols, illustrationMask, validateMask, maskSegments} from './data.js?v=20261013-paper-copy';
-import {MotionViewer} from './studio-viewer.js?v=1';
+import {MotionViewer} from './studio-viewer.js?v=2';
 
 const escape = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 // Render the paper's project name consistently, including labels from catalog data.

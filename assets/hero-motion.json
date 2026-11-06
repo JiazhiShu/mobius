@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "encoding": "uint16-le",
+  "upAxis": "Y",
+  "units": "meters",
+  "frames": 50,
+  "fps": 10.0,
+  "verticesPerFrame": 6890,
+  "faceCount": 13776,
+  "vertices": "hero-motion.vertices.bin",
+  "faces": "smpl.faces.bin",
+  "offset": [
+    -0.6602473142447297,
+    0.0,
+    -0.8386645145350462
+  ],
+  "scale": [
+    2.0210384543719368e-05,
+    4.206373780102257e-05,
+    2.4555555864428533e-05
+  ],
+  "sourceSample": "t2m_human_all_006",
+  "prompt": "Squat down to build power then jump up spin and bring the right hand down in a chopping attack"
+}

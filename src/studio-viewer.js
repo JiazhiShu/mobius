@@ -3,6 +3,19 @@ import {OrbitControls} from '../vendor/three/OrbitControls.js';
 
 export const COLORS = {known: 0x3275d1, generated: 0xe9823f, comparisonC: 0x8b5cf6, source: 0x7d8c9c};
 const COMPARISON_COLORS = [COLORS.known, COLORS.generated, COLORS.comparisonC];
+// A page may set window.MOBIUS_VIEWER_THEME before this module loads. Defaults preserve the light stage.
+const THEME = {
+  background: '#f3f6f9', exposure: 1.25, hemisphere: [0xffffff, 0x8895a4, 2.6], key: [0xfff8ed, 3], fill: [0xd3e3ff, 2], back: null,
+  floor: 0xf1f4f7, floorUnlit: false, floorOpacity: 1, grid: {size: 40, divisions: 80, center: 0xdce3eb, lines: 0xe7edf3, opacity: .65},
+  fog: false, rim: 0, reflection: false, ...globalThis.MOBIUS_VIEWER_THEME,
+};
+function addRimLight(material) {
+  if (!THEME.rim) return;
+  material.onBeforeCompile = shader => {
+    shader.fragmentShader = shader.fragmentShader.replace('#include <emissivemap_fragment>', `#include <emissivemap_fragment>
+      totalEmissiveRadiance += diffuseColor.rgb * pow(1. - saturate(dot(normalize(vViewPosition), normal)), 3.) * ${THEME.rim.toFixed(3)};`);
+  };
+}
 
 /** Owns graphics only. All tracks share a clock (seconds) and a camera. */
 export class MotionViewer {
@@ -12,7 +25,7 @@ export class MotionViewer {
     this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    this.renderer.toneMappingExposure = 1.25;
+    this.renderer.toneMappingExposure = THEME.exposure;
     this.camera = new THREE.PerspectiveCamera(36, 1, .01, 500);
     this.controls = new OrbitControls(this.camera, canvas);
     this.controls.enableDamping = true;
@@ -27,14 +40,18 @@ export class MotionViewer {
     this.resize();
   }
   makeScene() {
-    const scene = new THREE.Scene(); scene.background = new THREE.Color('#f3f6f9');
-    scene.add(new THREE.HemisphereLight(0xffffff, 0x8895a4, 2.6));
-    const key = new THREE.DirectionalLight(0xfff8ed, 3); key.position.set(3, 7, 5); scene.add(key);
-    const fill = new THREE.DirectionalLight(0xd3e3ff, 2); fill.position.set(-4, 3, -3); scene.add(fill);
-    const floor = new THREE.Mesh(new THREE.PlaneGeometry(200, 200), new THREE.MeshStandardMaterial({color: 0xf1f4f7, roughness: 1}));
-    floor.rotation.x = -Math.PI / 2; floor.position.y = -.008; scene.add(floor);
-    const grid = new THREE.GridHelper(40, 80, 0xdce3eb, 0xe7edf3); grid.position.y = -.005;
-    grid.material.transparent = true; grid.material.opacity = .65; scene.add(grid);
+    const scene = new THREE.Scene(); scene.background = new THREE.Color(THEME.background);
+    if (THEME.fog) scene.fog = new THREE.Fog(THEME.background, 10, 40);
+    scene.add(new THREE.HemisphereLight(...THEME.hemisphere));
+    const key = new THREE.DirectionalLight(...THEME.key); key.position.set(3, 7, 5); scene.add(key);
+    const fill = new THREE.DirectionalLight(...THEME.fill); fill.position.set(-4, 3, -3); scene.add(fill);
+    if (THEME.back) { const back = new THREE.DirectionalLight(...THEME.back); back.position.set(2, 3, -6); scene.add(back); }
+    const floor = new THREE.Mesh(new THREE.PlaneGeometry(200, 200), THEME.floorUnlit
+      ? new THREE.MeshBasicMaterial({color: THEME.floor, transparent: THEME.floorOpacity < 1, opacity: THEME.floorOpacity})
+      : new THREE.MeshStandardMaterial({color: THEME.floor, roughness: 1, transparent: THEME.floorOpacity < 1, opacity: THEME.floorOpacity}));
+    floor.rotation.x = -Math.PI / 2; floor.position.y = -.008; floor.renderOrder = -1; scene.add(floor);
+    const grid = new THREE.GridHelper(THEME.grid.size, THEME.grid.divisions, THEME.grid.center, THEME.grid.lines); grid.position.y = -.005;
+    grid.material.transparent = true; grid.material.opacity = THEME.grid.opacity; scene.add(grid);
     return scene;
   }
   resize() {
@@ -66,10 +83,18 @@ export class MotionViewer {
       geometry.setIndex(new THREE.BufferAttribute(motion.faces, 1));
       geometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array(motion.meta.verticesPerFrame * 3), 3).setUsage(THREE.DynamicDrawUsage));
       const material = new THREE.MeshStandardMaterial({color: index === 0 && mode !== 'single' ? COLORS.source : COLORS.known, roughness: .7, metalness: .03});
+      addRimLight(material);
       const mesh = new THREE.Mesh(geometry, material);
       mesh.position.copy(this.origin).multiplyScalar(-1); mesh.frustumCulled = false;
       this.scenes[index && mode === 'split' ? 1 : 0].add(mesh);
-      this.tracks.push({motion, mesh, index, frame: -1});
+      const track = {motion, mesh, index, frame: -1};
+      if (THEME.reflection) {
+        // A mirrored child seen through the translucent floor; it shares geometry, material, and visibility.
+        track.reflection = new THREE.Mesh(geometry, material);
+        track.reflection.scale.y = -1; track.reflection.frustumCulled = false;
+        mesh.add(track.reflection);
+      }
+      this.tracks.push(track);
     });
     this.setMode(mode); this.setView(this.preset); this.setTime(0);
     if (mode === 'comparison') {
@@ -146,6 +171,7 @@ export class MotionViewer {
     const direction = preset === 'front' ? new THREE.Vector3(0, .12, 1) : preset === 'side' ? new THREE.Vector3(1, .12, 0) : new THREE.Vector3(1.05, .5, 1.55);
     this.camera.position.copy(target).addScaledVector(direction.normalize(), distance);
     this.controls.target.copy(target); this.controls.maxDistance = Math.max(30, distance * 3); this.controls.update();
+    if (THEME.fog) for (const scene of this.scenes) { scene.fog.near = distance * 1.2; scene.fog.far = distance * 3.2; }
   }
   setMask(mask, onlyKnown = false, colors = null) {
     this.mask = mask; this.onlyKnown = onlyKnown;
@@ -210,6 +236,7 @@ export class MotionViewer {
   }
   render() {
     this.controls.update();
+    for (const track of this.tracks) if (track.reflection) track.reflection.position.y = -2 * track.mesh.position.y;
     const split = this.mode === 'split', count = split ? 2 : 1, width = this.width / count;
     this.renderer.setScissorTest(true);
     this.camera.aspect = width / this.height; this.camera.updateProjectionMatrix();
