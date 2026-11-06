@@ -8,7 +8,7 @@
   <link rel="icon" href="./assets/mobius-icon-square.svg?v=20261015" type="image/svg+xml">
   <link rel="preload" href="./assets/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="./assets/fonts/Newsreader-Variable.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="./src/redesign.css?v=20261106-newsreader-titles">
+  <link rel="stylesheet" href="./src/redesign.css?v=20261106-citation">
   <script type="importmap">{"imports":{"three":"./vendor/three/three.module.js"}}</script>
   <script>
     window.MOBIUS_VIEWER_THEME = {
@@ -111,6 +111,22 @@
         <p class="benchmark-note"><strong>Bold</strong> and <span class="second">underline</span> indicate the best and second-best model scores.</p>
       </article>
     </section>
+    <section class="citation-section" id="citation" aria-labelledby="citation-heading">
+      <div class="benchmark-heading"><p class="eyebrow">REFERENCE</p><h2 id="citation-heading">Citation</h2><p>If you find our work useful, please consider citing our paper.</p></div>
+      <div class="citation-card">
+        <div class="citation-toolbar"><span>BibTeX</span><div><a href="./assets/mobius.bib" download="mobius.bib">Download .bib</a><button type="button" id="copy-citation">Copy BibTeX</button></div></div>
+        <pre tabindex="0" aria-label="BibTeX citation"><code id="citation-code">@misc{shu2026mobius,
+  title = {{M{\&quot;o}bius}: A Unified Motion-Language Model Bridging Understanding and Generation},
+  author = {Jiazhi Shu and Chengfeng Zhao and Jinyi Wang and Yubo Zhao and Zhiyang Dou and Ronghui Li and Yu Lu and Xinwei Jiang and Zijiao Zeng and Yuan Liu},
+  year = {2026},
+  eprint = {2611.05279},
+  archivePrefix = {arXiv},
+  primaryClass = {cs.CV},
+  url = {https://arxiv.org/abs/2611.05279}
+}</code></pre>
+        <p id="citation-status" class="citation-status" role="status" aria-live="polite"></p>
+      </div>
+    </section>
     <footer><span><span class="mobius-name">Möbius</span>: A Unified Motion-Language Model Bridging Understanding and Generation</span></footer>
   </main>
   <template id="viewer-template"><div class="case-nav"><div><span class="case-eyebrow">EXAMPLE</span><span id="case-count">01 / 08</span></div><div class="case-controls"><button id="previous-case" aria-label="Previous example">←</button><label class="sr-only" for="case-select">Choose example</label><select id="case-select" class="sr-only"></select><button id="next-case" aria-label="Next example">→</button></div></div>      <div class="studio-body">
@@ -139,6 +155,6 @@
   <noscript>This interactive viewer needs JavaScript enabled.</noscript>
   <script type="module" src="./src/studio-app.js?v=20261106"></script>
   <script type="module" src="./src/studio-preview.js?v=20261015-simple-intro"></script>
-  <script type="module" src="./src/redesign.js?v=20261106"></script>
+  <script type="module" src="./src/redesign.js?v=20261106-citation"></script>
 </body>
 </html>

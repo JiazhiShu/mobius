@@ -346,3 +346,13 @@ footer .mobius-name{font-size:15px}
   *,*::before,*::after{animation:none!important;transition:none!important}
   .reveal-ready{opacity:1;transform:none}
 }
+
+.citation-section{padding:40px var(--gutter) 64px}
+.citation-card{border:1px solid var(--line);border-radius:16px;background:var(--panel);overflow:hidden}
+.citation-toolbar{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;padding:16px 20px;border-bottom:1px solid var(--line);font:500 13px/1.5 var(--mono);color:var(--muted)}
+.citation-toolbar>div{display:flex;align-items:center;gap:16px}
+.citation-toolbar a:hover{color:var(--text)}
+.citation-toolbar button{padding:8px 12px;border:1px solid var(--line-strong);border-radius:8px;background:var(--panel-2);color:var(--text);font:inherit;cursor:pointer}
+.citation-card pre{margin:0;padding:22px;white-space:pre-wrap;overflow-wrap:anywhere;font:400 13px/1.75 var(--mono);color:var(--text)}
+.citation-status{margin:0;padding:0 22px;color:var(--muted);font-size:13px}
+.citation-status:not(:empty){padding-bottom:16px}

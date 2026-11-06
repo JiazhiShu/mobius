@@ -69,3 +69,17 @@ document.querySelectorAll('.benchmark-table').forEach(table => {
   });
   table.addEventListener('pointerleave', clear);
 });
+
+const copyCitation = document.querySelector('#copy-citation');
+copyCitation?.addEventListener('click', async () => {
+  const code = document.querySelector('#citation-code');
+  const status = document.querySelector('#citation-status');
+  try {
+    await navigator.clipboard.writeText(code.textContent + '\n');
+    status.textContent = 'Citation copied.';
+  } catch {
+    const range = document.createRange(); range.selectNodeContents(code);
+    const selection = window.getSelection(); selection.removeAllRanges(); selection.addRange(range);
+    status.textContent = 'Citation selected. Press Ctrl+C or Command+C to copy, or download the .bib file.';
+  }
+});
